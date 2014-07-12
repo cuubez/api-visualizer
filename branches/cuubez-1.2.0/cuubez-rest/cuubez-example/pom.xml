@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.cuubez</groupId>
+        <artifactId>cuubez-rest</artifactId>
+        <version>1.1.0</version>
+    </parent>
+
+    <name>cuubez-example</name>
+    <description>
+        Cuubez RESTful web services framework examples
+    </description>
+    <groupId>com.cuubez</groupId>
+    <artifactId>cuubez-example</artifactId>
+    <version>1.1.0</version>
+    <packaging>pom</packaging>
+
+    <url>http://www.cuubez.com</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <modules>
+        <module>hello-world</module>
+        <module>basic-authentication</module>
+    </modules>
+
+</project>
