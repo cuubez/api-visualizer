@@ -16,6 +16,7 @@ package com.cuubez.visualizer.resource;
 
 
 import com.cuubez.visualizer.context.ApplicationConfigurationContext;
+import com.cuubez.visualizer.resource.domain.RootResource;
 import com.cuubez.visualizer.scanner.ClassScanner;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,11 +24,11 @@ import org.apache.commons.logging.LogFactory;
 import java.io.IOException;
 import java.util.List;
 
-public class ServiceRepositoryInitiator {
+public class ServiceRepositoryProcessor {
 
-    private static Log log = LogFactory.getLog(ServiceRepositoryInitiator.class);
+    private static Log log = LogFactory.getLog(ServiceRepositoryProcessor.class);
 
-    public void initiate() {
+    public void process() {
 
         log.trace("service repository initialization started");
         List<Class<?>> classes = null;

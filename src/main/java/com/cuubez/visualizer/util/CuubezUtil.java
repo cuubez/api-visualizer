@@ -25,6 +25,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CuubezUtil {
 
@@ -60,6 +61,10 @@ public class CuubezUtil {
 
     private static String normalizeRootPath(String rootPath) {
 
+        if (isNullOrEmpty(rootPath)) {
+            return null;
+        }
+
         if(!rootPath.startsWith(PATH_SEPARATOR)) {
             rootPath = PATH_SEPARATOR + rootPath;
         }
@@ -72,6 +77,10 @@ public class CuubezUtil {
     }
 
     private static String normalizeSubPath(String subPath) {
+
+        if (isNullOrEmpty(subPath)) {
+            return null;
+        }
 
         if(subPath.startsWith(PATH_SEPARATOR) && subPath.length() == 1) {
             return null;
@@ -177,6 +186,15 @@ public class CuubezUtil {
 
         return null;
 
+    }
+
+
+    public static String generateRandomString() {
+
+        double MEAN = 100.0f;
+        double VARIANCE = 5.0f;
+
+        return String.valueOf(MEAN + new Random().nextGaussian() * VARIANCE);
     }
 
 

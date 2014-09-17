@@ -12,20 +12,31 @@
  *	See the License for the specific language governing permissions and
  *	limitations under the License.
  */
-package com.cuubez.visualizer.context;
+package com.cuubez.visualizer.resource.domain;
 
-import java.util.ArrayList;
+import com.cuubez.visualizer.context.HttpCodeMetaData;
+
 import java.util.List;
 
-public class ClassMetaData {
+public class RootResource {
 
-    private String path;
+	private String path;
     private String name;
     private String detail;
     private String[] consume;
     private String[] produce;
     private Class<?> clazz;
     private List<HttpCodeMetaData> httpCodeMetaDataList;
+    private List<SubResource> subResources = null;
+
+
+    public List<SubResource> getSubResources() {
+		return subResources;
+	}
+
+	public void setSubResources(List<SubResource> subResources) {
+		this.subResources = subResources;
+	}
 
     public String getPath() {
         return path;
@@ -82,4 +93,6 @@ public class ClassMetaData {
     public void setHttpCodeMetaDataList(List<HttpCodeMetaData> httpCodeMetaDataList) {
         this.httpCodeMetaDataList = httpCodeMetaDataList;
     }
+
+
 }

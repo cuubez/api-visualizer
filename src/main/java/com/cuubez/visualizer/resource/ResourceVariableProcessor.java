@@ -5,10 +5,11 @@ import com.cuubez.visualizer.annotation.M;
 import com.cuubez.visualizer.context.HeaderVariableMetaData;
 import com.cuubez.visualizer.context.PathVariableMetaData;
 import com.cuubez.visualizer.context.QueryVariableMetaData;
+import com.cuubez.visualizer.resource.domain.RootResource;
+import com.cuubez.visualizer.resource.domain.SubResource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
@@ -16,13 +17,13 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public class ResourceVariableResolver {
+public class ResourceVariableProcessor {
 
-    private static Log log = LogFactory.getLog(ResourceVariableResolver.class);
+    private static Log log = LogFactory.getLog(ResourceVariableProcessor.class);
 
 
 
-    public void resolve() {
+    public void process() {
 
         List<RootResource> rootResourceList = ResourceRepository.getInstance().getRootResources();
 
@@ -31,7 +32,7 @@ public class ResourceVariableResolver {
             for (SubResource subResource : rootResource.getSubResources()) {
 
 
-                Method selectedMethod = subResource.getMethodMetaData().getReflectionMethod();
+                Method selectedMethod = subResource.getReflectionMethod();
                 final Class[] paramTypes = selectedMethod.getParameterTypes();
 
                 final Annotation[][] paramAnnotations = selectedMethod.getParameterAnnotations();

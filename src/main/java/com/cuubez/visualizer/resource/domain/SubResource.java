@@ -12,44 +12,96 @@
  *	See the License for the specific language governing permissions and
  *	limitations under the License.
  */
-package com.cuubez.visualizer.context;
+package com.cuubez.visualizer.resource.domain;
+
+
+import com.cuubez.visualizer.context.*;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+public class SubResource {
 
-public class MethodMetaData {
-
-	private Method reflectionMethod;
-	private String path;
+    private String path;
     private String name;
     private String detail;
     private String[] consume;
-	private String[] produce;
+    private String[] produce;
     private Class<?> clazz;
     private String httpMethod;
     private Class<?> returnType = null;
     private Class<?> inputObjectType;
     private int inputObjectIndex;
     private Object[] parameters;
+    private Class<?> requestBody;
     private List<HttpCodeMetaData> httpCodeMetaDataList;
+    private List<PathVariableMetaData> pathVariableMetaDataList = null;
+    private List<QueryVariableMetaData> queryVariableMetaDataList = null;
+    private List<HeaderVariableMetaData> headerVariableMetaDataList = null;
+    private Method reflectionMethod;
 
 
 
+    public List<PathVariableMetaData> getPathVariableMetaDataList() {
+        return pathVariableMetaDataList;
+    }
 
-	public Method getReflectionMethod() {
-		return reflectionMethod;
-	}
-	public void setReflectionMethod(Method reflectionMethod) {
-		this.reflectionMethod = reflectionMethod;
-	}
-	public String getPath() {
-		return path;
-	}
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void addPathVariableMetaData(PathVariableMetaData pathVariableMetaData) {
+
+        if(this.pathVariableMetaDataList == null) {
+            this.pathVariableMetaDataList = new ArrayList<PathVariableMetaData>();
+        }
+
+        this.pathVariableMetaDataList.add(pathVariableMetaData);
+    }
+
+    public List<QueryVariableMetaData> getQueryVariableMetaDataList() {
+        return queryVariableMetaDataList;
+    }
+
+    public void addQueryVariableMetaData(QueryVariableMetaData queryVariableMetaData) {
+
+        if(this.queryVariableMetaDataList == null) {
+            this.queryVariableMetaDataList = new ArrayList<QueryVariableMetaData>();
+        }
+
+        this.queryVariableMetaDataList.add(queryVariableMetaData);
+    }
+
+    public List<HeaderVariableMetaData> getHeaderVariableMetaDataList() {
+        return headerVariableMetaDataList;
+    }
+
+    public void addHeaderVariableMetaData(HeaderVariableMetaData headerVariableMetaData) {
+
+        if(this.headerVariableMetaDataList == null) {
+            this.headerVariableMetaDataList = new ArrayList<HeaderVariableMetaData>();
+        }
+
+        this.headerVariableMetaDataList.add(headerVariableMetaData);
+    }
+
+    public Class<?> getRequestBody() {
+        return requestBody;
+    }
+
+    public void setRequestBody(Class<?> requestBody) {
+        this.requestBody = requestBody;
+    }
+
+    public Method getReflectionMethod() {
+        return reflectionMethod;
+    }
+    public void setReflectionMethod(Method reflectionMethod) {
+        this.reflectionMethod = reflectionMethod;
+    }
+    public String getPath() {
+        return path;
+    }
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     public String[] getConsume() {
         return consume;
