@@ -19,6 +19,7 @@ import java.util.List;
 
 public class ApiMetaData {
 
+    public String id;
     public String httpMethod;
     public String path;
     public String name;
@@ -30,9 +31,18 @@ public class ApiMetaData {
     public List<HeaderVariableMetaData> headerVariableMetaDataList;
     public List<HttpCodeMetaData> httpCodeMetaDataList;
 
-    public ApiMetaData(String httpMethod, String path) {
+    public ApiMetaData(String id, String httpMethod, String path) {
+        this.id = id;
         this.httpMethod = httpMethod;
         this.path = path;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getHttpMethod() {

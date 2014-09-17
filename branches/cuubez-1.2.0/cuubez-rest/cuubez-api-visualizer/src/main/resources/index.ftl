@@ -1249,11 +1249,14 @@
 <script>
 
 function showDiv(id) {
-  if(document.getElementById(id).style.display = "block") {
+
+  if(document.getElementById(id).style.display === "block") {
     document.getElementById(id).style.display = "none"
   } else {
     document.getElementById(id).style.display = "block"
   }
+
+
 }
 
 </script>
@@ -1274,26 +1277,27 @@ function showDiv(id) {
 
 </div>
 
-<ul class="endpoints" id="pet_endpoint_list">
+<ul class="endpoints" id="">
 
  <#list apis as api>
-<li class="endpoint">
+
+  <li class="endpoint">
   <ul class="operations">
 
     <#if api.httpMethod == 'GET'>
-    <li class="get operation" id="pet_getPetById">
+    <li class="get operation" id="">
     <#elseif api.httpMethod == 'POST'>
-    <li class="post operation" id="pet_getPetById">
+    <li class="post operation" id="">
     <#elseif api.httpMethod == 'PUT'>
-    <li class="put operation" id="pet_getPetById">
+    <li class="put operation" id="">
     <#else>
-    <li class="delete operation" id="pet_getPetById">
+    <li class="delete operation" id="">
     </#if>
 
       <div class="heading">
         <h3>
           <span class="http_method">
-          <a href="javascript:showDiv()">${api.httpMethod}</a>
+          <a href="javascript:showDiv('${api.id}')">${api.httpMethod}</a>
           </span>
           <span class="path">
           <a href="">${api.path}</a>
@@ -1301,14 +1305,14 @@ function showDiv(id) {
         </h3>
 
         <ul class="options">
-                  <li>
-                  <#if api.name??><a class="toggleOperation" href="">${api.name}</a></#if>
-                  </li>
-                </ul>
+          <li>
+            <#if api.name??><a class="toggleOperation" href="">${api.name}</a></#if>
+          </li>
+        </ul>
 
       </div>
 
-     <div id="content" class="content" style="display:block">
+     <div id="${api.id}" class="content" style="display:block">
 
      <div class="sandbox">
 

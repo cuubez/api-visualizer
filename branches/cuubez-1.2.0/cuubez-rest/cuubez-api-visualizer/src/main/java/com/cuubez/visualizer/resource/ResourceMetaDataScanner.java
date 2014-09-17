@@ -17,9 +17,11 @@ package com.cuubez.visualizer.resource;
 import com.cuubez.visualizer.annotation.Detail;
 import com.cuubez.visualizer.annotation.Name;
 import com.cuubez.visualizer.annotation.ResponseType;
-import com.cuubez.visualizer.context.ClassMetaData;
-import com.cuubez.visualizer.context.MethodMetaData;
+import com.cuubez.visualizer.resource.domain.RootResource;
+import com.cuubez.visualizer.resource.domain.SubResource;
 import com.cuubez.visualizer.util.CuubezUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.ext.Provider;
@@ -28,21 +30,38 @@ import java.lang.reflect.Modifier;
 
 public class ResourceMetaDataScanner {
 
-    public ClassMetaData scanClass(Class<?> clazz) {
+    private static Log log = LogFactory.getLog(ResourceMetaDataScanner.class);
+    private static ResourceMetaDataScanner instance = null;
 
-        ClassMetaData classMetaData = new ClassMetaData();
+    public static ResourceMetaDataScanner getInstance() {
 
-        scanPath(clazz, classMetaData);
-        scanConsume(clazz, classMetaData);
-        scanProduce(clazz, classMetaData);
-        scanHttpCodes(clazz, classMetaData);
-        classMetaData.setClazz(clazz);
-        return classMetaData;
+        if(instance == null) {
+            log.trace("resource repository created");
+            instance = new ResourceMetaDataScanner();
+        }
+
+        return instance;
+    }
+
+    private ResourceMetaDataScanner() {
+        super();
+    }
+
+    public RootResource scanClass(Class<?> clazz) {
+
+        RootResource rootResource = new RootResource();
+
+        scanPath(clazz, rootResource);
+        scanConsume(clazz, rootResource);
+        scanProduce(clazz, rootResource);
+        scanHttpCodes(clazz, rootResource);
+        rootResource.setClazz(clazz);
+        return rootResource;
 
     }
 
 
-    public MethodMetaData scanMethods(Class<?> clazz, Method method) {
+    public SubResource scanMethods(Class<?> clazz, Method method) {
 
         int modifier = method.getModifiers();
 
@@ -50,21 +69,23 @@ public class ResourceMetaDataScanner {
             return null;
         }
 
-        MethodMetaData methodMetaData = new MethodMetaData();
-        methodMetaData.setReflectionMethod(method);
+        SubResource subResource = new SubResource();
+        subResource.setReflectionMethod(method);
 
-        if (!scanHttpMethod(methodMetaData, method)) {
+        if (!scanHttpMethod(subResource, method)) {
             return null;
         }
-        scanPath(methodMetaData, method);
-        scanConsume(methodMetaData, method);
-        scanProduce(methodMetaData, method);
-        scanDetail(methodMetaData, method);
-        scanName(methodMetaData, method);
-        scanHttpCodes(methodMetaData, method);
-        scanResponseType(methodMetaData, method);
-        methodMetaData.setClazz(clazz);
-        return methodMetaData;
+
+        scanPath(subResource, method);
+        scanConsume(subResource, method);
+        scanProduce(subResource, method);
+        scanDetail(subResource, method);
+        scanName(subResource, method);
+        scanHttpCodes(subResource, method);
+        scanResponseType(subResource, method);
+        subResource.setClazz(clazz);
+
+        return subResource;
     }
 
 
@@ -121,24 +142,24 @@ public class ResourceMetaDataScanner {
         return false;
     }
 
-    private boolean scanPath(MethodMetaData methodMetaData, Method method) {
+    private boolean scanPath(SubResource subResource, Method method) {
 
         Path path = method.getAnnotation(Path.class);
 
         if (path != null) {
-            methodMetaData.setPath(normalizePath(path.value()));
+            subResource.setPath(normalizePath(path.value()));
             return true;
         }
 
         return false;
     }
 
-    private boolean scanPath(Class<?> clazz, ClassMetaData classMetaData) {
+    private boolean scanPath(Class<?> clazz, RootResource rootResource) {
 
         Path path = clazz.getAnnotation(Path.class);
 
         if (path != null) {
-            classMetaData.setPath(normalizePath(path.value()));
+            rootResource.setPath(normalizePath(path.value()));
             return true;
         }
 
@@ -148,7 +169,7 @@ public class ResourceMetaDataScanner {
             Path superClassPath = superClass.getAnnotation(Path.class);
 
             if (superClassPath != null) {
-                classMetaData.setPath(normalizePath(superClassPath.value()));
+                rootResource.setPath(normalizePath(superClassPath.value()));
                 return true;
             }
 
@@ -160,7 +181,7 @@ public class ResourceMetaDataScanner {
 
                 if (interfacePath != null) {
 
-                    classMetaData.setPath(normalizePath(interfacePath.value()));
+                    rootResource.setPath(normalizePath(interfacePath.value()));
                     return true;
 
                 }
@@ -171,12 +192,12 @@ public class ResourceMetaDataScanner {
         return false;
     }
 
-    private boolean scanProduce(MethodMetaData methodMetaData, Method method) {
+    private boolean scanProduce(SubResource subResource, Method method) {
 
         Produces produce = method.getAnnotation(Produces.class);
 
         if (produce != null) {
-            methodMetaData.setProduce(produce.value());
+            subResource.setProduce(produce.value());
 
             return true;
         }
@@ -185,59 +206,59 @@ public class ResourceMetaDataScanner {
     }
 
 
-    private boolean scanDetail(MethodMetaData methodMetaData, Method method) {
+    private boolean scanDetail(SubResource subResource, Method method) {
 
         Detail detail = method.getAnnotation(Detail.class);
 
         if (detail != null) {
 
-            methodMetaData.setDetail(detail.value());
+            subResource.setDetail(detail.value());
             return true;
         }
 
         return false;
     }
 
-    private boolean scanName(MethodMetaData methodMetaData, Method method) {
+    private boolean scanName(SubResource subResource, Method method) {
 
         Name name = method.getAnnotation(Name.class);
 
         if (name != null) {
 
-            methodMetaData.setName(name.value());
+            subResource.setName(name.value());
             return true;
         }
 
         return false;
     }
 
-    private boolean scanHttpMethod(MethodMetaData methodMetaData, Method method) {
+    private boolean scanHttpMethod(SubResource subResource, Method method) {
 
         GET get = method.getAnnotation(GET.class);
 
         if (get != null) {
-            methodMetaData.setHttpMethod(HttpMethod.GET);
+            subResource.setHttpMethod(HttpMethod.GET);
             return true;
         }
 
         POST post = method.getAnnotation(POST.class);
 
         if (post != null) {
-            methodMetaData.setHttpMethod(HttpMethod.POST);
+            subResource.setHttpMethod(HttpMethod.POST);
             return true;
         }
 
         PUT put = method.getAnnotation(PUT.class);
 
         if (put != null) {
-            methodMetaData.setHttpMethod(HttpMethod.PUT);
+            subResource.setHttpMethod(HttpMethod.PUT);
             return true;
         }
 
         DELETE delete = method.getAnnotation(DELETE.class);
 
         if (delete != null) {
-            methodMetaData.setHttpMethod(HttpMethod.DELETE);
+            subResource.setHttpMethod(HttpMethod.DELETE);
             return true;
         }
 
@@ -245,12 +266,12 @@ public class ResourceMetaDataScanner {
     }
 
 
-    private boolean scanProduce(Class<?> clazz, ClassMetaData classMetaData) {
+    private boolean scanProduce(Class<?> clazz, RootResource rootResource) {
 
         Produces produce = clazz.getAnnotation(Produces.class);
 
         if (produce != null) {
-            classMetaData.setProduce(produce.value());
+            rootResource.setProduce(produce.value());
 
             return true;
         }
@@ -258,24 +279,24 @@ public class ResourceMetaDataScanner {
         return false;
     }
 
-    private boolean scanName(Class<?> clazz, ClassMetaData classMetaData) {
+    private boolean scanName(Class<?> clazz, RootResource rootResource) {
 
         Name name = clazz.getAnnotation(Name.class);
 
         if (name != null) {
-            classMetaData.setName(name.value());
+            rootResource.setName(name.value());
             return true;
         }
 
         return false;
     }
 
-    private boolean scanDetail(Class<?> clazz, ClassMetaData classMetaData) {
+    private boolean scanDetail(Class<?> clazz, RootResource rootResource) {
 
         Detail detail = clazz.getAnnotation(Detail.class);
 
         if (detail != null) {
-            classMetaData.setDetail(detail.value());
+            rootResource.setDetail(detail.value());
 
             return true;
         }
@@ -284,24 +305,24 @@ public class ResourceMetaDataScanner {
     }
 
 
-    private boolean scanConsume(MethodMetaData methodMetaData, Method method) {
+    private boolean scanConsume(SubResource subResource, Method method) {
 
         Consumes consume = method.getAnnotation(Consumes.class);
 
         if (consume != null) {
-            methodMetaData.setConsume(consume.value());
+            subResource.setConsume(consume.value());
             return true;
         }
 
         return false;
     }
 
-    private boolean scanConsume(Class<?> clazz, ClassMetaData classMetaData) {
+    private boolean scanConsume(Class<?> clazz, RootResource rootResource) {
 
         Consumes consume = clazz.getAnnotation(Consumes.class);
 
         if (consume != null) {
-            classMetaData.setConsume(consume.value());
+            rootResource.setConsume(consume.value());
 
             return true;
         }
@@ -309,36 +330,36 @@ public class ResourceMetaDataScanner {
         return false;
     }
 
-    private boolean scanHttpCodes(Class<?> clazz, ClassMetaData classMetaData) {
+    private boolean scanHttpCodes(Class<?> clazz, RootResource rootResource) {
 
         com.cuubez.visualizer.annotation.HttpCode httpCode = clazz.getAnnotation(com.cuubez.visualizer.annotation.HttpCode.class);
 
         if (httpCode != null) {
-            classMetaData.setHttpCodeMetaDataList(CuubezUtil.generateHttpCodeMetaData(httpCode.value()));
+            rootResource.setHttpCodeMetaDataList(CuubezUtil.generateHttpCodeMetaData(httpCode.value()));
             return true;
         }
 
         return false;
     }
 
-    private boolean scanHttpCodes(MethodMetaData methodMetaData, Method method) {
+    private boolean scanHttpCodes(SubResource subResource, Method method) {
 
         com.cuubez.visualizer.annotation.HttpCode httpCode = method.getAnnotation(com.cuubez.visualizer.annotation.HttpCode.class);
 
         if (httpCode != null) {
-            methodMetaData.setHttpCodeMetaDataList(CuubezUtil.generateHttpCodeMetaData(httpCode.value()));
+            subResource.setHttpCodeMetaDataList(CuubezUtil.generateHttpCodeMetaData(httpCode.value()));
             return true;
         }
 
         return false;
     }
 
-    private boolean scanResponseType(MethodMetaData methodMetaData, Method method) {
+    private boolean scanResponseType(SubResource subResource, Method method) {
 
         ResponseType responseType = method.getAnnotation(ResponseType.class);
 
         if (responseType != null) {
-            methodMetaData.setReturnType(responseType.value());
+            subResource.setReturnType(responseType.value());
             return true;
         }
 

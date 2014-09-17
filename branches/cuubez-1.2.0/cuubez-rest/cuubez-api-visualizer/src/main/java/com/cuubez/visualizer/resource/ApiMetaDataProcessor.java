@@ -16,14 +16,16 @@ package com.cuubez.visualizer.resource;
 
 
 import com.cuubez.visualizer.context.ApiMetaData;
+import com.cuubez.visualizer.resource.domain.RootResource;
+import com.cuubez.visualizer.resource.domain.SubResource;
 import com.cuubez.visualizer.util.CuubezUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApiMetaDataResolver {
+public class ApiMetaDataProcessor {
 
-    public void resolve() {
+    public void process() {
 
 
         List<RootResource> rootResourceList = ResourceRepository.getInstance().getRootResources();
@@ -34,21 +36,21 @@ public class ApiMetaDataResolver {
 
             for (SubResource subResource : rootResource.getSubResources()) {
 
-                String path = CuubezUtil.constructApiPath(rootResource.getClassMetaData().getPath(), subResource.getMethodMetaData().getPath());
+                String path = CuubezUtil.constructApiPath(rootResource.getPath(), subResource.getPath());
 
-                ApiMetaData apiMetaData = new ApiMetaData(subResource.getMethodMetaData().getHttpMethod(), path);
-                apiMetaData.setName(CuubezUtil.getName(rootResource.getClassMetaData().getName(), subResource.getMethodMetaData().getName()));
-                apiMetaData.setDetail(CuubezUtil.getDetail(rootResource.getClassMetaData().getDetail(), subResource.getMethodMetaData().getDetail()));
+                ApiMetaData apiMetaData = new ApiMetaData(CuubezUtil.generateRandomString(), subResource.getHttpMethod(), path);
+                apiMetaData.setName(CuubezUtil.getName(rootResource.getName(), subResource.getName()));
+                apiMetaData.setDetail(CuubezUtil.getDetail(rootResource.getDetail(), subResource.getDetail()));
                 apiMetaData.setPathVariableMetaDataList(subResource.getPathVariableMetaDataList());
                 apiMetaData.setQueryVariableMetaDataList(subResource.getQueryVariableMetaDataList());
                 apiMetaData.setHeaderVariableMetaDataList(subResource.getHeaderVariableMetaDataList());
                 if(subResource.getRequestBody() != null) {
                     apiMetaData.setRequestBody(CuubezUtil.generateJsonSchema(subResource.getRequestBody()));
                 }
-                apiMetaData.setHttpCodeMetaDataList(CuubezUtil.getHttpCodes(rootResource.getClassMetaData().getHttpCodeMetaDataList(), subResource.getMethodMetaData().getHttpCodeMetaDataList()));
+                apiMetaData.setHttpCodeMetaDataList(CuubezUtil.getHttpCodes(rootResource.getHttpCodeMetaDataList(), subResource.getHttpCodeMetaDataList()));
 
-                if(subResource.getMethodMetaData().getReturnType() != null) {
-                    apiMetaData.setResponseBody(CuubezUtil.generateJsonSchema(subResource.getMethodMetaData().getReturnType()));
+                if(subResource.getReturnType() != null) {
+                    apiMetaData.setResponseBody(CuubezUtil.generateJsonSchema(subResource.getReturnType()));
                 }
                 apiMetaDataList.add(apiMetaData);
             }

@@ -15,9 +15,9 @@
 package com.cuubez.visualizer.servlet;
 
 import com.cuubez.visualizer.context.ApplicationConfigurationContext;
-import com.cuubez.visualizer.resource.ApiMetaDataResolver;
-import com.cuubez.visualizer.resource.ResourceVariableResolver;
-import com.cuubez.visualizer.resource.ServiceRepositoryInitiator;
+import com.cuubez.visualizer.resource.ApiMetaDataProcessor;
+import com.cuubez.visualizer.resource.ResourceVariableProcessor;
+import com.cuubez.visualizer.resource.ServiceRepositoryProcessor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -37,9 +37,9 @@ public class VzBootstrapContextListener implements ServletContextListener {
         log.trace("Context initialization started");
 
         initiateApplicationConfigurationContext(contextEvent);
-        new ServiceRepositoryInitiator().initiate();
-        new ResourceVariableResolver().resolve();
-        new ApiMetaDataResolver().resolve();
+        new ServiceRepositoryProcessor().process();
+        new ResourceVariableProcessor().process();
+        new ApiMetaDataProcessor().process();
 
     }
 

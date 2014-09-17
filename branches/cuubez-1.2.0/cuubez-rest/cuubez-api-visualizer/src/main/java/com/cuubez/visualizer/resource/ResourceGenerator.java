@@ -15,8 +15,9 @@
 package com.cuubez.visualizer.resource;
 
 
-import com.cuubez.visualizer.context.ClassMetaData;
-import com.cuubez.visualizer.context.MethodMetaData;
+import com.cuubez.visualizer.resource.domain.RootResource;
+import com.cuubez.visualizer.resource.domain.SubResource;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +33,15 @@ public class ResourceGenerator {
 
             resource = new RootResource();
 
-            ResourceMetaDataScanner resourceMetaDataScanner = new ResourceMetaDataScanner();
-            ClassMetaData classMetaData = resourceMetaDataScanner.scanClass(clazz);
+            ResourceMetaDataScanner resourceMetaDataScanner = ResourceMetaDataScanner.getInstance();
+            RootResource rootResource = resourceMetaDataScanner.scanClass(clazz);
 
-            if (classMetaData == null) {
+            if (rootResource == null) {
                 return null;
             }
 
-            resource.setClassMetaData(classMetaData);
 
-            resource.setSubResources(generateSubResource(resourceMetaDataScanner, classMetaData));
+            resource.setSubResources(generateSubResource(resourceMetaDataScanner, rootResource));
 
         }
 
@@ -50,9 +50,9 @@ public class ResourceGenerator {
     }
 
 
-    private List<SubResource> generateSubResource(ResourceMetaDataScanner resourceMetaDataScanner, ClassMetaData classMetaData) {
+    private List<SubResource> generateSubResource(ResourceMetaDataScanner resourceMetaDataScanner, RootResource rootResource) {
 
-        Class<?> clazz = classMetaData.getClazz();
+        Class<?> clazz = rootResource.getClazz();
         Method[] methods = clazz.getDeclaredMethods();
 
         List<SubResource> subResources = new ArrayList<SubResource>();
@@ -60,14 +60,11 @@ public class ResourceGenerator {
         for (Method method : methods) {
 
             if (ResourceMetaDataScanner.isSubResource(method)) {
-                MethodMetaData methodMetaData = resourceMetaDataScanner.scanMethods(clazz, method);
+                SubResource subResource = resourceMetaDataScanner.scanMethods(clazz, method);
 
-                if (methodMetaData != null) {
+                if (subResource != null) {
 
-                    populateRootLevelValues(classMetaData, methodMetaData);
-                    SubResource subResource = new SubResource();
-                    subResource.setMethodMetaData(methodMetaData);
-
+                    populateRootLevelValues(rootResource, subResource);
                     subResources.add(subResource);
 
                 }
@@ -77,14 +74,14 @@ public class ResourceGenerator {
         return subResources;
     }
 
-    private void populateRootLevelValues(ClassMetaData classMetaData, MethodMetaData methodMetaData) {
+    private void populateRootLevelValues(RootResource rootResource, SubResource subResource) {
 
-        if (methodMetaData.getConsume() == null || methodMetaData.getConsume().length == 0) {
-            methodMetaData.setConsume(classMetaData.getConsume());
+        if (subResource.getConsume() == null || subResource.getConsume().length == 0) {
+            subResource.setConsume(rootResource.getConsume());
         }
 
-        if (methodMetaData.getProduce() == null || methodMetaData.getProduce().length == 0) {
-            methodMetaData.setProduce(classMetaData.getProduce());
+        if (subResource.getProduce() == null || subResource.getProduce().length == 0) {
+            subResource.setProduce(rootResource.getProduce());
         }
 
     }

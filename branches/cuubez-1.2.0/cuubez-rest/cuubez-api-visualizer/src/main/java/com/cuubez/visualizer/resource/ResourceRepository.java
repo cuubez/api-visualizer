@@ -15,12 +15,11 @@
 package com.cuubez.visualizer.resource;
 
 import com.cuubez.visualizer.context.ApiMetaData;
-import com.cuubez.visualizer.util.CuubezUtil;
+import com.cuubez.visualizer.resource.domain.RootResource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ResourceRepository {
