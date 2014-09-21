@@ -15,12 +15,8 @@
 package com.cuubez.visualizer.scanner.reader;
 
 import com.cuubez.visualizer.scanner.filter.FileFilter;
-import com.cuubez.visualizer.scanner.reader.FileReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.jar.JarEntry;

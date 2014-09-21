@@ -14,7 +14,6 @@
  */
 package com.cuubez.visualizer.servlet;
 
-import com.cuubez.visualizer.domain.ApiMetaData;
 import com.cuubez.visualizer.domain.ApiMetaDataInformation;
 import com.cuubez.visualizer.resource.InformationRepository;
 import freemarker.template.Configuration;
@@ -28,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
