@@ -15,7 +15,7 @@
 package com.cuubez.visualizer.util;
 
 
-import com.cuubez.visualizer.context.HttpCodeMetaData;
+import com.cuubez.visualizer.domain.HttpCodeMetaData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +23,12 @@ import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 import com.fasterxml.jackson.module.jsonSchema.factories.SchemaFactoryWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -133,9 +139,9 @@ public class CuubezUtil {
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(schema);
 
         } catch (JsonMappingException e) {
-            log.error(e);
+            log.error("Error occurred while generating JSON schema for the class ["+clazz+"]",e);
         } catch (JsonProcessingException e) {
-            log.error(e);
+            log.error("Error occurred while generating JSON schema for the class ["+clazz+"]",e);
         }
 
         return null;
@@ -195,6 +201,25 @@ public class CuubezUtil {
         double VARIANCE = 5.0f;
 
         return String.valueOf(MEAN + new Random().nextGaussian() * VARIANCE);
+    }
+
+    public static Document createDocument(InputStream inputStream) throws ParserConfigurationException{
+
+        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+        javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();
+        Document document = null;
+
+        try {
+
+            document = db.parse(inputStream);
+
+        } catch (SAXException e) {
+            log.error("Wrong configuration file format",e);
+        } catch (IOException e) {
+            log.error("Wrong configuration file format",e);
+        }
+
+        return document;
     }
 
 

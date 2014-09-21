@@ -15,10 +15,9 @@
 package com.cuubez.visualizer.resource;
 
 import com.cuubez.visualizer.annotation.Detail;
+import com.cuubez.visualizer.annotation.Group;
 import com.cuubez.visualizer.annotation.Name;
 import com.cuubez.visualizer.annotation.ResponseType;
-import com.cuubez.visualizer.resource.domain.RootResource;
-import com.cuubez.visualizer.resource.domain.SubResource;
 import com.cuubez.visualizer.util.CuubezUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -52,6 +51,7 @@ public class ResourceMetaDataScanner {
         RootResource rootResource = new RootResource();
 
         scanPath(clazz, rootResource);
+        scanGroup(clazz, rootResource);
         scanConsume(clazz, rootResource);
         scanProduce(clazz, rootResource);
         scanHttpCodes(clazz, rootResource);
@@ -95,7 +95,7 @@ public class ResourceMetaDataScanner {
             return false;
         }
 
-        if (clazz.getAnnotation(Path.class) != null) {
+        if (clazz.getAnnotation(Path.class) != null && clazz.getAnnotation(Group.class) != null) {
             return true;
         }
 
@@ -104,14 +104,14 @@ public class ResourceMetaDataScanner {
         while (!declaringClass.equals(Object.class)) {
             // try a superclass
             Class<?> superclass = declaringClass.getSuperclass();
-            if (superclass.getAnnotation(Path.class) != null) {
+            if (superclass.getAnnotation(Path.class) != null && clazz.getAnnotation(Group.class) != null) {
                 return true;
             }
 
             // try interfaces
             Class<?>[] interfaces = declaringClass.getInterfaces();
             for (Class<?> interfaceClass : interfaces) {
-                if (interfaceClass.getAnnotation(Path.class) != null) {
+                if (interfaceClass.getAnnotation(Path.class) != null && clazz.getAnnotation(Group.class) != null) {
                     return true;
                 }
             }
@@ -311,6 +311,21 @@ public class ResourceMetaDataScanner {
 
         if (consume != null) {
             subResource.setConsume(consume.value());
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean scanGroup(Class<?> clazz, RootResource rootResource) {
+
+        Group group = clazz.getAnnotation(Group.class);
+
+        if (group != null) {
+
+            rootResource.setGroupName(group.name());
+            rootResource.setGroupTittle(group.tittle());
+
             return true;
         }
 

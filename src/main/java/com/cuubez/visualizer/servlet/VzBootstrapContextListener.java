@@ -14,10 +14,13 @@
  */
 package com.cuubez.visualizer.servlet;
 
-import com.cuubez.visualizer.context.ApplicationConfigurationContext;
-import com.cuubez.visualizer.resource.ApiMetaDataProcessor;
-import com.cuubez.visualizer.resource.ResourceVariableProcessor;
-import com.cuubez.visualizer.resource.ServiceRepositoryProcessor;
+import com.cuubez.visualizer.domain.ApplicationConfigurationContext;
+import com.cuubez.visualizer.domain.ConfigurationType;
+import com.cuubez.visualizer.processor.ApiMetaDataProcessor;
+import com.cuubez.visualizer.processor.ConfigurationProcessor;
+import com.cuubez.visualizer.processor.ResourceVariableProcessor;
+import com.cuubez.visualizer.processor.ServiceRepositoryProcessor;
+import com.cuubez.visualizer.resource.InformationRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -36,9 +39,13 @@ public class VzBootstrapContextListener implements ServletContextListener {
 
         log.trace("Context initialization started");
 
-        initiateApplicationConfigurationContext(contextEvent);
-        new ServiceRepositoryProcessor().process();
-        new ResourceVariableProcessor().process();
+        ApplicationConfigurationContext applicationConfigurationContext = generateApplicationConfigurationContext(contextEvent);
+        InformationRepository.getInstance().setApplicationConfigurationContext(applicationConfigurationContext);
+        new ConfigurationProcessor().process();
+        if(ConfigurationType.XML.equals(applicationConfigurationContext.getConfigurationType())) {
+            new ServiceRepositoryProcessor().process();
+            new ResourceVariableProcessor().process();
+        }
         new ApiMetaDataProcessor().process();
 
     }
@@ -46,7 +53,7 @@ public class VzBootstrapContextListener implements ServletContextListener {
 
     private String getApplicationName(String realPath) {
 
-        String PATH_SEPARATOR = System.getProperty("path.separator");
+        String PATH_SEPARATOR = System.getProperty("path.separator"); //TuDO use FILE.separator
         String path = realPath;
 
         if (path == null) {
@@ -61,13 +68,21 @@ public class VzBootstrapContextListener implements ServletContextListener {
         return path.substring(index + 1, path.length());
     }
 
-    private void initiateApplicationConfigurationContext(ServletContextEvent contextEvent) {
+    private ApplicationConfigurationContext generateApplicationConfigurationContext(ServletContextEvent contextEvent) {
 
         String applicationPath = contextEvent.getServletContext().getRealPath("/");
         String applicationName = getApplicationName(contextEvent.getServletContext().getContextPath());
-        ApplicationConfigurationContext applicationConfigurationContext = ApplicationConfigurationContext.getInstance();
+        ApplicationConfigurationContext applicationConfigurationContext = new ApplicationConfigurationContext();
         applicationConfigurationContext.setApplicationName(applicationName);
         applicationConfigurationContext.setApplicationPath(applicationPath);
+
+        String configurationType = contextEvent.getServletContext().getInitParameter("configuration-type");
+
+        if("xml-configuration".equalsIgnoreCase(configurationType)) {
+            applicationConfigurationContext.setConfigurationType(ConfigurationType.XML);
+        }
+
+        return applicationConfigurationContext;
 
     }
 

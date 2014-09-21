@@ -14,29 +14,31 @@
  */
 package com.cuubez.visualizer.scanner;
 
+import com.cuubez.visualizer.scanner.filter.*;
+import com.cuubez.visualizer.scanner.reader.ClassFileReader;
+import com.cuubez.visualizer.scanner.reader.FileReader;
+import com.cuubez.visualizer.scanner.reader.JarFileReader;
 import javassist.bytecode.ClassFile;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
-public class ClassScanner {
+public class ClassScanner extends FileScanner {
 
     private static Log log = LogFactory.getLog(ClassScanner.class);
 
-    public List<Class<?>> discover(String applicationPath) throws IOException {
+    public List<Class<?>> scan(String applicationPath) throws IOException {
 
             List<Class<?>> classes = new ArrayList<Class<?>>();
 
             URL resource = findResources(applicationPath);
-            FileReader itr = getFileReader(resource, new FileFilter());
+            FileReader itr = getFileReader(resource, new ClassFileFilter());
 
-            InputStream is = null;
+            InputStream is;
             while ((is = itr.next()) != null) {
                 // make a data input stream
                 DataInputStream dstream = new DataInputStream(
@@ -58,50 +60,7 @@ public class ClassScanner {
             return classes;
         }
 
-
-    private final URL findResources(String applicationPath) throws MalformedURLException {
-
-        File fp = new File(applicationPath);
-
-        if (!fp.exists()) {
-            throw new RuntimeException("File path does not exist: " + fp);
-        }
-
-        return fp.toURI().toURL();
-    }
-
-    private final URL[] findResources() {
-        List<URL> list = new ArrayList<URL>();
-        String classpath = System.getProperty("java.class.path");
-        StringTokenizer tokenizer = new StringTokenizer(classpath, File.pathSeparator);
-
-        while (tokenizer.hasMoreTokens()) {
-            String path = tokenizer.nextToken();
-            try {
-
-                path = java.net.URLDecoder.decode(path, "UTF-8");
-
-            } catch (UnsupportedEncodingException e) {
-
-            }
-
-            File fp = new File(path);
-
-            if (!fp.exists())
-                throw new RuntimeException("File in java.class.path does not exist: " + fp);
-            try {
-
-                list.add(fp.toURL());
-
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        return list.toArray(new URL[list.size()]);
-    }
-
-    private FileReader getFileReader(URL url, FileFilter filter) throws IOException {
+    private FileReader getFileReader(URL url, com.cuubez.visualizer.scanner.filter.FileFilter filter) throws IOException {
         String urlString = url.toString();
         if (urlString.endsWith("!/")) {
             urlString = urlString.substring(4);

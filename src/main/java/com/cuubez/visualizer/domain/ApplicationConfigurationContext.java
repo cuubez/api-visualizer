@@ -12,30 +12,15 @@
  *	See the License for the specific language governing permissions and
  *	limitations under the License.
  */
-package com.cuubez.visualizer.context;
+package com.cuubez.visualizer.domain;
 
 public class ApplicationConfigurationContext {
 
-    private static ApplicationConfigurationContext applicationConfigurationContext = null;
     private String applicationName = null;
     private String applicationPath = null;
+    private ConfigurationType configurationType = ConfigurationType.ANNOTATION;
 
-    private ApplicationConfigurationContext() {
-    }
-
-    public static ApplicationConfigurationContext getInstance() {
-
-        if (applicationConfigurationContext == null) {
-
-            applicationConfigurationContext = new ApplicationConfigurationContext();
-
-        }
-
-        return applicationConfigurationContext;
-
-    }
-
-    public String getApplicationName() {
+    String getApplicationName() {
         return applicationName;
     }
 
@@ -51,4 +36,11 @@ public class ApplicationConfigurationContext {
         this.applicationPath = applicationPath;
     }
 
+    public ConfigurationType getConfigurationType() {
+        return configurationType;
+    }
+
+    public void setConfigurationType(ConfigurationType configurationType) {
+        this.configurationType = configurationType;
+    }
 }

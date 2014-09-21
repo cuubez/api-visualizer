@@ -14,10 +14,6 @@
  */
 package com.cuubez.visualizer.resource;
 
-
-import com.cuubez.visualizer.resource.domain.RootResource;
-import com.cuubez.visualizer.resource.domain.SubResource;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,25 +23,23 @@ public class ResourceGenerator {
 
     public RootResource generateResource(Class<?> clazz) {
 
-        RootResource resource = null;
+        RootResource rootResource = null;
 
         if (ResourceMetaDataScanner.isResource(clazz)) {
 
-            resource = new RootResource();
-
             ResourceMetaDataScanner resourceMetaDataScanner = ResourceMetaDataScanner.getInstance();
-            RootResource rootResource = resourceMetaDataScanner.scanClass(clazz);
+            rootResource = resourceMetaDataScanner.scanClass(clazz);
 
             if (rootResource == null) {
                 return null;
             }
 
 
-            resource.setSubResources(generateSubResource(resourceMetaDataScanner, rootResource));
+            rootResource.setSubResources(generateSubResource(resourceMetaDataScanner, rootResource));
 
         }
 
-        return resource;
+        return rootResource;
 
     }
 
