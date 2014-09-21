@@ -14,14 +14,15 @@
  */
 package com.cuubez.visualizer.servlet;
 
-import com.cuubez.visualizer.context.ApiMetaData;
-import com.cuubez.visualizer.resource.ResourceRepository;
+import com.cuubez.visualizer.domain.ApiMetaData;
+import com.cuubez.visualizer.domain.ApiMetaDataInformation;
+import com.cuubez.visualizer.resource.InformationRepository;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import freemarker.template.Template;
-import javax.servlet.ServletException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,10 +38,10 @@ public class ServletContainer extends HttpServlet {
 
     protected void process(HttpServletRequest request, HttpServletResponse response) {
 
-        List<ApiMetaData> apiMetaDataList = ResourceRepository.getInstance().getApiMetaDataList();
+        ApiMetaDataInformation apiMetaDataInformation = InformationRepository.getInstance().getApiMetaData();
 
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("apis", apiMetaDataList);
+        data.put("apiMetaDataInfo", apiMetaDataInformation);
 
 
         try {

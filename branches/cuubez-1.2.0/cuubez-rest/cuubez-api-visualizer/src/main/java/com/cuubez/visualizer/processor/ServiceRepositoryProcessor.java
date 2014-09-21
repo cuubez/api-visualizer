@@ -12,11 +12,12 @@
  *	See the License for the specific language governing permissions and
  *	limitations under the License.
  */
-package com.cuubez.visualizer.resource;
+package com.cuubez.visualizer.processor;
 
 
-import com.cuubez.visualizer.context.ApplicationConfigurationContext;
-import com.cuubez.visualizer.resource.domain.RootResource;
+import com.cuubez.visualizer.resource.InformationRepository;
+import com.cuubez.visualizer.resource.ResourceGenerator;
+import com.cuubez.visualizer.resource.RootResource;
 import com.cuubez.visualizer.scanner.ClassScanner;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,11 +34,11 @@ public class ServiceRepositoryProcessor {
         log.trace("service repository initialization started");
         List<Class<?>> classes = null;
 
-        String applicationPath = ApplicationConfigurationContext.getInstance().getApplicationPath();
+        String applicationPath = InformationRepository.getInstance().getApplicationConfigurationContext().getApplicationPath();
         ClassScanner scanner = new ClassScanner();
 
         try {
-            classes = scanner.discover(applicationPath);
+            classes = scanner.scan(applicationPath);
         } catch (IOException e) {
             log.error(e);
         }
@@ -49,7 +50,7 @@ public class ServiceRepositoryProcessor {
                 RootResource rootResource = resourceGenerator.generateResource(clazz);
 
                 if(rootResource != null) {
-                    ResourceRepository.getInstance().addRootResource(rootResource);
+                    InformationRepository.getInstance().addRootResource(rootResource);
                 }
 
             }

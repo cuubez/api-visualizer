@@ -1244,6 +1244,48 @@
 	border-radius: 50%;
 }
 
+.group {
+    background: none repeat scroll 0 0 #9999FF;
+    border-radius: 0.5em 0.5em 0.5em 0.5em;
+    color: #333333;
+    -moz-box-sizing: border-box;
+    margin: 2em 0 1em;
+    padding: 0.75em;
+    font-size: 110%;
+    font-weight: bold;
+}
+
+.header {
+
+    background-color: #71ABE5;
+    padding: 34px;
+
+}
+
+.footer {
+
+    background-color: #71ABE5;
+    padding: 10px;
+
+}
+
+.logo {
+
+
+
+}
+
+.header_tittle {
+  margin: 1em 0 0.5em 0;
+  font-weight: 600;
+  font-family: 'Titillium Web', sans-serif;
+  position: relative;
+  font-size: 36px;
+  line-height: 40px;
+  padding: 15px 15px 15px 15%;
+  color: #355681;
+}
+
 </style>
 
 <script>
@@ -1261,25 +1303,31 @@ function showDiv(id) {
 
 </script>
 
-<title>ViralPatel.net - FreeMarker Hello World</title>
+<title>Cuubez API</title>
 </head>
 <body class="cuubez-section">
 
-
+<#if apiMetaDataInfo??>
+<div class="header">
+<table style="width: 100%">
+<th>
+<td align="right"><span class="logo"><img src="${apiMetaDataInfo.display.logoUrl}" height="60" width="60"/></span></td>
+<td><span class="header_tittle">${apiMetaDataInfo.display.tittle}</span></td>
+</th>
+</table>
+</div>
 
 <div id="cuubez-ui-container" class="cuubez-ui-wrap">
 
 
 <div class="container" id="resources_container">
     <ul id="resources">
-    <li id="resource_pet" class="resource active"><div class="heading">
-
-
-</div>
+    <li class="resource">
 
 <ul class="endpoints" id="">
-
- <#list apis as api>
+ <#list apiMetaDataInfo.apiMetaData?keys as groupKey>
+<div class="group">${apiMetaDataInfo.apiMetaData[groupKey].groupName}  <#if apiMetaDataInfo.apiMetaData[groupKey].groupTittle??>: ${apiMetaDataInfo.apiMetaData[groupKey].groupTittle}</#if></div>
+ <#list apiMetaDataInfo.apiMetaData[groupKey].apiMetaDataList as api>
 
   <li class="endpoint">
   <ul class="operations">
@@ -1312,7 +1360,7 @@ function showDiv(id) {
 
       </div>
 
-     <div id="${api.id}" class="content" style="display:block">
+     <div id="${api.id}" class="content" style="display:none">
 
      <div class="sandbox">
 
@@ -1398,8 +1446,8 @@ function showDiv(id) {
 
              <#list api.httpCodeMetaDataList as httpStatusCode>
                <tr>
-                 <td>${httpStatusCode.name}</td>
-                 <td>${httpStatusCode.detail}</td>
+                 <td>${httpStatusCode.code}</td>
+                 <td>${httpStatusCode.reason}</td>
                </tr>
              </#list>
            </table>
@@ -1419,8 +1467,6 @@ function showDiv(id) {
            </tr>
         </table>
         </#if>
-
-
         </div>
 
      </div>
@@ -1430,6 +1476,12 @@ function showDiv(id) {
   </ul>
 
 </#list>
+</#list>
 </ul>
+</div>
+</div>
+
+<div class="footer"/>
+</#if>
 </body>
 </html>

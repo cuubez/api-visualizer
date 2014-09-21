@@ -12,7 +12,7 @@
  *	See the License for the specific language governing permissions and
  *	limitations under the License.
  */
-package com.cuubez.visualizer.scanner;
+package com.cuubez.visualizer.scanner.reader;
 
 import java.io.InputStream;
 

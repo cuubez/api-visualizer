@@ -12,14 +12,15 @@
  *	See the License for the specific language governing permissions and
  *	limitations under the License.
  */
-package com.cuubez.visualizer.resource.domain;
+package com.cuubez.visualizer.resource;
 
-import com.cuubez.visualizer.context.HttpCodeMetaData;
-
+import com.cuubez.visualizer.domain.HttpCodeMetaData;
 import java.util.List;
 
 public class RootResource {
 
+    private String groupName;
+    private String groupTittle;
 	private String path;
     private String name;
     private String detail;
@@ -29,6 +30,21 @@ public class RootResource {
     private List<HttpCodeMetaData> httpCodeMetaDataList;
     private List<SubResource> subResources = null;
 
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getGroupTittle() {
+        return groupTittle;
+    }
+
+    public void setGroupTittle(String groupTittle) {
+        this.groupTittle = groupTittle;
+    }
 
     public List<SubResource> getSubResources() {
 		return subResources;

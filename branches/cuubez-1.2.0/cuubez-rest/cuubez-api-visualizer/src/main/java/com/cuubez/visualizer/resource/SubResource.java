@@ -12,10 +12,10 @@
  *	See the License for the specific language governing permissions and
  *	limitations under the License.
  */
-package com.cuubez.visualizer.resource.domain;
+package com.cuubez.visualizer.resource;
 
 
-import com.cuubez.visualizer.context.*;
+import com.cuubez.visualizer.domain.*;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

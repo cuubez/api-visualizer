@@ -12,31 +12,31 @@
  *	See the License for the specific language governing permissions and
  *	limitations under the License.
  */
-package com.cuubez.visualizer.scanner;
+package com.cuubez.visualizer.scanner.filter;
 
 
-public class FileFilter {
+import java.io.File;
 
-    private transient String[] ignoredPackages = {"javax", "java", "sun", "com.sun", "javassist", "org.apache"};
+public class ClassFileFilter extends FileFilter {
 
-    public final boolean accepts(String filename) {
+    private static final String EXTENSION = "class";
 
-        if (filename.endsWith(".class")) {
-            if (filename.startsWith("/")) {
-                filename = filename.substring(1);
-            }
-            if (!ignoreScan(filename.replace('/', '.'))) {
-                return true;
-            }
-        }
-        return false;
+
+    @Override
+    public boolean filter(String fileName) {
+        String[] extensions = {EXTENSION};
+        return isAcceptExtension(fileName, extensions);
     }
 
+    @Override
+    protected boolean isIgnore(String fileName) {
 
-    private boolean ignoreScan(String intf) {
+        String[] ignoredPackages = {"javax", "java", "sun", "com.sun", "javassist", "org.apache"};
+
+        String packageName = fileName.replace(File.separator.charAt(0), '.');
 
         for (String ignored : ignoredPackages) {
-            if (intf.startsWith(ignored + ".")) {
+            if (packageName.startsWith(ignored + ".")) {
                 return true;
             }
         }

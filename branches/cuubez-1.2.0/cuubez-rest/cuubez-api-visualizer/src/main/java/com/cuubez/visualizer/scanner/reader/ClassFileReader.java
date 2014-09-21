@@ -12,8 +12,9 @@
  *	See the License for the specific language governing permissions and
  *	limitations under the License.
  */
-package com.cuubez.visualizer.scanner;
+package com.cuubez.visualizer.scanner.reader;
 
+import com.cuubez.visualizer.scanner.filter.FileFilter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,21 +36,9 @@ public class ClassFileReader implements FileReader {
         }
     }
 
-    private static void init(List<File> list, File dir, FileFilter filter) throws Exception {
-        File[] files = dir.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].isDirectory()) {
-                init(list, files[i], filter);
-            } else {
-                if (filter == null || filter.accepts(files[i].getAbsolutePath())) {
-                    list.add(files[i]);
-                }
-            }
-        }
-    }
 
     @Override
-    public final InputStream next() {
+    public InputStream next() {
         if (index >= files.size()) {
             return null;
         }
@@ -64,6 +53,20 @@ public class ClassFileReader implements FileReader {
     @Override
     public void close() {
         // DO Nothing
+    }
+
+
+    private static void init(List<File> list, File dir, FileFilter filter) throws Exception {
+        File[] files = dir.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isDirectory()) {
+                init(list, files[i], filter);
+            } else {
+                if (filter == null || filter.filter(files[i].getAbsolutePath())) {
+                    list.add(files[i]);
+                }
+            }
+        }
     }
 
 }

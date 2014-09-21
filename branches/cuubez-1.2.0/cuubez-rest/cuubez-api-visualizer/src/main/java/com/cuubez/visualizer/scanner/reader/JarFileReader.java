@@ -12,8 +12,10 @@
  *	See the License for the specific language governing permissions and
  *	limitations under the License.
  */
-package com.cuubez.visualizer.scanner;
+package com.cuubez.visualizer.scanner.reader;
 
+import com.cuubez.visualizer.scanner.filter.FileFilter;
+import com.cuubez.visualizer.scanner.reader.FileReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -34,36 +36,9 @@ public class JarFileReader implements FileReader {
     private boolean start = true;
     private boolean closed = false;
 
-    public JarFileReader(File file, FileFilter filter) throws IOException {
-        this(new FileInputStream(file), filter);
-    }
-
     public JarFileReader(InputStream is, FileFilter filter) throws IOException {
         this.filter = filter;
         jarInputStream = new JarInputStream(is);
-    }
-
-    private void setNext() {
-        start = true;
-        try {
-
-            if (next != null) {
-                jarInputStream.closeEntry();
-            }
-            next = null;
-
-            do {
-                next = jarInputStream.getNextJarEntry();
-            } while (next != null && (next.isDirectory() || (filter == null || !filter.accepts(next.getName()))));
-
-            if (next == null) {
-                close();
-            }
-
-        } catch (IOException e) {
-            log.error(e);
-        }
-
     }
 
     @Override
@@ -89,6 +64,31 @@ public class JarFileReader implements FileReader {
             log.error(e);
         }
     }
+
+    private void setNext() {
+        start = true;
+        try {
+
+            if (next != null) {
+                jarInputStream.closeEntry();
+            }
+            next = null;
+
+            do {
+                next = jarInputStream.getNextJarEntry();
+            } while (next != null && (next.isDirectory() || (filter == null || !filter.filter(next.getName()))));
+
+            if (next == null) {
+                close();
+            }
+
+        } catch (IOException e) {
+            log.error(e);
+        }
+
+    }
+
+
 
 
 }

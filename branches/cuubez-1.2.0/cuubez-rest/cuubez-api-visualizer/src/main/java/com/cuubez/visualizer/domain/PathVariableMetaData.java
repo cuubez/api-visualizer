@@ -12,17 +12,17 @@
  *	See the License for the specific language governing permissions and
  *	limitations under the License.
  */
-package com.cuubez.visualizer.context;
+package com.cuubez.visualizer.domain;
 
 
-public class QueryVariableMetaData {
+public class PathVariableMetaData {
 
     public String name;
     public boolean mandatory;
     public String type;
     public String description;
 
-    public QueryVariableMetaData(String name,boolean mandatory, String type, String description) {
+    public PathVariableMetaData(String name,boolean mandatory, String type, String description) {
         this.name = name;
         this.mandatory = mandatory;
         this.type = type;
