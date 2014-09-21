@@ -36,7 +36,6 @@ import java.util.Map;
 public class ApiMetaDataProcessor {
 
     private static Log log = LogFactory.getLog(ApiMetaDataProcessor.class);
-    private static final String DEFAULT_ICON = "icon.png";
     private static final String DEFAULT_HEADER = "API Documentation";
     private static final String DEFAULT_TITTLE = "API Documentation";
 
@@ -253,17 +252,6 @@ public class ApiMetaDataProcessor {
         if (configuration != null && configuration.getDisplay() != null) {
             display = configuration.getDisplay();
 
-            if(display.isLogoInclude()) {
-
-                if(CuubezUtil.isNullOrEmpty(display.getLogoUrl())) {
-                    URL defaultIcon = getClass().getResource(DEFAULT_ICON);
-                    if(defaultIcon != null) {
-                        display.setLogoUrl(defaultIcon.getPath());
-                    }
-                }
-
-            }
-
             if(CuubezUtil.isNullOrEmpty(display.getHeader())) {
                 display.setHeader(DEFAULT_HEADER);
             }
@@ -280,11 +268,6 @@ public class ApiMetaDataProcessor {
 
     private Display getDefaultDisplayConfiguration() {
         Display display = new Display();
-        URL defaultIcon = getClass().getResource(DEFAULT_ICON);
-        if(defaultIcon != null) {
-            display.setLogoUrl(defaultIcon.getPath());
-            display.setLogoInclude(true);
-        }
         display.setHeader(DEFAULT_HEADER);
         display.setTittle(DEFAULT_TITTLE);
 
