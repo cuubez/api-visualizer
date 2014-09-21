@@ -1258,7 +1258,7 @@
 .header {
 
     background-color: #71ABE5;
-    padding: 34px;
+    padding: 24px;
 
 }
 
@@ -1309,12 +1309,14 @@ function showDiv(id) {
 
 <#if apiMetaDataInfo??>
 <div class="header">
+<#if apiMetaDataInfo.display??>
 <table style="width: 100%">
 <th>
-<td align="right"><span class="logo"><img src="${apiMetaDataInfo.display.logoUrl}" height="60" width="60"/></span></td>
+<td align="right"><#if apiMetaDataInfo.display.logoUrl??><#if apiMetaDataInfo.display.logoInclude><span class="logo"><img src="${apiMetaDataInfo.display.logoUrl}" height="60" width="60"/></span></#if></#if></td>
 <td><span class="header_tittle">${apiMetaDataInfo.display.tittle}</span></td>
 </th>
 </table>
+</#if>
 </div>
 
 <div id="cuubez-ui-container" class="cuubez-ui-wrap">
@@ -1322,6 +1324,13 @@ function showDiv(id) {
 
 <div class="container" id="resources_container">
     <ul id="resources">
+    <li class="operations">
+    <#if apiMetaDataInfo.display.description??>
+    <b>${apiMetaDataInfo.display.description.header}</b>
+    </br>
+    ${apiMetaDataInfo.display.description.description}</li>
+    </#if>
+    </li>
     <li class="resource">
 
 <ul class="endpoints" id="">
@@ -1412,7 +1421,6 @@ function showDiv(id) {
                     <td>${headerVariable.type}</td>
                     <td><#if headerVariable.description??> ${headerVariable.description} </#if></td>
                   </tr>
-
               </#list>
             </#if>
         </table>

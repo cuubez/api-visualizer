@@ -42,7 +42,7 @@ public class VzBootstrapContextListener implements ServletContextListener {
         ApplicationConfigurationContext applicationConfigurationContext = generateApplicationConfigurationContext(contextEvent);
         InformationRepository.getInstance().setApplicationConfigurationContext(applicationConfigurationContext);
         new ConfigurationProcessor().process();
-        if(ConfigurationType.XML.equals(applicationConfigurationContext.getConfigurationType())) {
+        if(ConfigurationType.ANNOTATION.equals(applicationConfigurationContext.getConfigurationType())) {
             new ServiceRepositoryProcessor().process();
             new ResourceVariableProcessor().process();
         }

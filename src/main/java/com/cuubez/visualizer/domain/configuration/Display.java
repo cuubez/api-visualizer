@@ -6,7 +6,7 @@ public class Display {
     String header;
     String tittle;
     String logoUrl;
-    boolean isLogoInclude;
+    boolean logoInclude;
     Description description;
 
     public String getHeader() {
@@ -34,11 +34,11 @@ public class Display {
     }
 
     public boolean isLogoInclude() {
-        return isLogoInclude;
+        return logoInclude;
     }
 
     public void setLogoInclude(boolean isLogoInclude) {
-        this.isLogoInclude = isLogoInclude;
+        this.logoInclude = isLogoInclude;
     }
 
     public Description getDescription() {
