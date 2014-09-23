@@ -80,6 +80,7 @@ public class ApiMetaDataProcessor {
                 }
 
                 if(!CuubezUtil.isNullOrEmpty(rootResource.getGroupName())) {
+                    finalizeApiMetaData(apiMetaData);
                     addSubResource(rootResource.getGroupName(), rootResource.getGroupTittle(), apiMetaData);
                 }
             }
@@ -142,7 +143,7 @@ public class ApiMetaDataProcessor {
 
 
                             apiMetaData.setHttpCodeMetaDataList(CuubezUtil.getHttpCodes(getHttpCodeMetaDataList(group.getHttpCodes()), getHttpCodeMetaDataList(resource.getHttpCodes())));
-
+                            finalizeApiMetaData(apiMetaData);
                             addSubResource(group.getName(), group.getTitle(), apiMetaData);
                             ApiMetaDataInformation apiMetaDataInformation = new ApiMetaDataInformation();
                             apiMetaDataInformation.setApiMetaData(apiMetaDataMap);
@@ -158,6 +159,23 @@ public class ApiMetaDataProcessor {
 
         }
 
+    }
+
+    private void finalizeApiMetaData(ApiMetaData apiMetaData) {
+        List<PathVariableMetaData> pathVariableMetaDataList = apiMetaData.getPathVariableMetaDataList();
+        List<QueryVariableMetaData> queryVariableMetaDataList = apiMetaData.getQueryVariableMetaDataList();
+        List<HeaderVariableMetaData> headerVariableMetaDataList = apiMetaData.getHeaderVariableMetaDataList();
+        String requestBody = apiMetaData.getRequestBody();
+        String responseBody = apiMetaData.getResponseBody();
+
+        if((pathVariableMetaDataList == null || pathVariableMetaDataList.isEmpty()) && (queryVariableMetaDataList == null || queryVariableMetaDataList.isEmpty())
+                && (headerVariableMetaDataList == null || headerVariableMetaDataList.isEmpty()) && CuubezUtil.isNullOrEmpty(requestBody)) {
+            apiMetaData.setRequestContain(false);
+        }
+
+        if(CuubezUtil.isNullOrEmpty(responseBody)) {
+            apiMetaData.setResponseContain(false);
+        }
     }
 
     private List<PathVariableMetaData> getPathVariableMetaDataList(List<Variable> variables) {

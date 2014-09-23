@@ -30,6 +30,8 @@ public class ApiMetaData {
     public List<QueryVariableMetaData> queryVariableMetaDataList;
     public List<HeaderVariableMetaData> headerVariableMetaDataList;
     public List<HttpCodeMetaData> httpCodeMetaDataList;
+    public boolean requestContain = true;
+    public boolean responseContain = true;
 
     public ApiMetaData(String id, String httpMethod, String path) {
         this.id = id;
@@ -134,4 +136,19 @@ public class ApiMetaData {
         this.responseBody = responseBody;
     }
 
+    public boolean isRequestContain() {
+        return requestContain;
+    }
+
+    public void setRequestContain(boolean requestContain) {
+        this.requestContain = requestContain;
+    }
+
+    public boolean isResponseContain() {
+        return responseContain;
+    }
+
+    public void setResponseContain(boolean responseContain) {
+        this.responseContain = responseContain;
+    }
 }
