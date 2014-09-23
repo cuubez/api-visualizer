@@ -1378,6 +1378,7 @@ function showDiv(id) {
         <#if api.detail??><span>${api.detail}</span>
         <hr />
         </#if>
+        <#if api.requestContain == true>
         <h4>Request</h4>
 
          <div style="margin:0;padding:0;display:inline"></div>
@@ -1440,8 +1441,9 @@ function showDiv(id) {
         </tr>
         </table>
        </#if>
+       </#if>
 
-
+       <#if api.responseContain == true>
         <h4>Response</h4>
         <div style="margin:0;padding:0;display:inline"/>
 
@@ -1460,7 +1462,7 @@ function showDiv(id) {
              </#list>
            </table>
         </#if>
-
+       </#if>
 
         <#if api.responseBody??>
         <div style="margin:0;padding:0"/>
