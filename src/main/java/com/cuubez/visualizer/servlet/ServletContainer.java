@@ -46,7 +46,7 @@ public class ServletContainer extends HttpServlet {
 
             Configuration freemarkerConfiguration = new Configuration();
             freemarkerConfiguration.setClassForTemplateLoading(this.getClass(), "/");
-            Template freemarkerTemplate = freemarkerConfiguration.getTemplate("index.ftl");
+            Template freemarkerTemplate = freemarkerConfiguration.getTemplate("cuubez_api.ftl");
             freemarkerTemplate.process(data, response.getWriter());
 
 
