@@ -44,6 +44,7 @@ body {
 	max-width: 960px;
 	margin-left: auto;
 	margin-right: auto;
+        margin-bottom: 50px;
 }
 .cuubez-section .cuubez-ui-wrap b, .cuubez-section .cuubez-ui-wrap strong {
 	font-family: "Droid Sans", sans-serif;
@@ -107,7 +108,7 @@ body {
 	list-style: none;
 }
 .endpoints{
-	margin:0 0 50px 0;
+	margin:0 0 10px 0;
 	}
 .cuubez-section .cuubez-ui-wrap h1 a, .cuubez-section .cuubez-ui-wrap h2 a, .cuubez-section .cuubez-ui-wrap h3 a, .cuubez-section .cuubez-ui-wrap h4 a, .cuubez-section .cuubez-ui-wrap h5 a, .cuubez-section .cuubez-ui-wrap h6 a {
 	text-decoration: none;
@@ -526,7 +527,7 @@ body {
 	color: black;
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span.path {
-	padding-left: 10px;	
+	padding-left: 10px;
 	font-weight:normal;
 	text-shadow:0 1px #fff;
 }
@@ -581,7 +582,7 @@ body {
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content {
 	border-top: none;
-	border-radius:2px;  
+	border-radius:2px;
 	margin: 0 0 20px;
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content h4 {
@@ -626,12 +627,12 @@ body {
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.put div.heading {
 	background-color: #ffead0;
-	border: 1px solid #ffc377; 
+	border: 1px solid #ffc377;
 	border-radius: 2px;
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.put div.heading h3 span.http_method a {
 	/*background-color: #c5862b;*/
-  
+
 	background: rgba(255,175,75,1);
 	background: -moz-linear-gradient(top, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
 	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,175,75,1)), color-stop(100%, rgba(255,146,10,1)));
@@ -655,7 +656,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', end
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.put div.content h4 {
 	color: #c5862b;
-	
+
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.put div.content div.sandbox_header a {
 	color: #dcb67f;
@@ -727,7 +728,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', end
 	border-radius:2px;
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.post div.heading h3 span.http_method a {
-	/*background-color: #10a54a;*/	
+	/*background-color: #10a54a;*/
 	background: rgba(34,235,112,1);
 	background: -moz-linear-gradient(top, rgba(34,235,112,1) 0%, rgba(16,165,74,1) 100%);
 	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(34,235,112,1)), color-stop(100%, rgba(16,165,74,1)));
@@ -786,7 +787,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', end
 	border-radius:2px;
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.get div.heading h3 span.http_method a {
-	
+
 background: rgba(120,179,235,1);
 background: -moz-linear-gradient(top, rgba(120,179,235,1) 0%, rgba(32,124,229,1) 100%);
 background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(120,179,235,1)), color-stop(100%, rgba(32,124,229,1)));
@@ -1221,8 +1222,8 @@ ul {
 hr { background:#363636; color:#fff; width:100%; float:left; clear:both;}
 
 .operations h6 { font-size:25px; font-weight:normal;}
-.plus { float:right; margin:0 10px; line-height:28px; font-size:30px; text-shadow:0 1px #fff; color:#3d3d3d;}
-.minus { display:none; float:right; margin:0 10px; line-height:28px; font-size:30px; text-shadow:0 1px #fff; color:#3d3d3d;}
+.plus { display:none; float:right; margin:0 10px; line-height:28px; font-size:30px; text-shadow:0 1px #fff; color:#3d3d3d;}
+.minus { float:right; margin:0 10px; line-height:28px; font-size:30px; text-shadow:0 1px #fff; color:#3d3d3d;}
 #list_one, #list_two { display:none;}
 </style>
 <script>
@@ -1230,36 +1231,26 @@ hr { background:#363636; color:#fff; width:100%; float:left; clear:both;}
 function showDiv(id) {
 
   if(document.getElementById(id).style.display === "block") {
-    document.getElementById(id).style.display = "none";  
+    document.getElementById(id).style.display = "none";
   } else {
-    document.getElementById(id).style.display = "block";    
+    document.getElementById(id).style.display = "block";
   }
 
 
 }
-function collaps_1(){
-	 if(document.getElementById('list_one').style.display === "block") {
-    	document.getElementById('list_one').style.display = "none";
-		document.getElementById('plus').style.display = "block"; 
-		document.getElementById('minus').style.display = "none";  
+function collaps(id){
+	 if(document.getElementById(id).style.display === "block") {
+    	document.getElementById(id).style.display = "none";
+		document.getElementById(id+'plus').style.display = "block";
+		document.getElementById(id+'minus').style.display = "none";
 	  } else {
-		document.getElementById('list_one').style.display = "block"; 
-		document.getElementById('plus').style.display = "none"; 
-		document.getElementById('minus').style.display = "block";    
+		document.getElementById(id).style.display = "block";
+		document.getElementById(id+'plus').style.display = "none";
+		document.getElementById(id+'minus').style.display = "block";
 	  }
 	}
 
-function collaps_2(){
-	 if(document.getElementById('list_two').style.display === "block") {
-    	document.getElementById('list_two').style.display = "none";
-		document.getElementById('plus2').style.display = "block"; 
-		document.getElementById('minus2').style.display = "none";  
-	  } else {
-		document.getElementById('list_two').style.display = "block"; 
-		document.getElementById('plus2').style.display = "none"; 
-		document.getElementById('minus2').style.display = "block";    
-	  }
-	}
+
 </script>
 <#if apiMetaDataInfo?? && apiMetaDataInfo.display?? && apiMetaDataInfo.display.header??>
 	<title>${apiMetaDataInfo.display.header}</title>
@@ -1307,26 +1298,27 @@ function collaps_2(){
         		<h6>${apiMetaDataInfo.display.description.header}</h6>
         </#if>
         <#if apiMetaDataInfo?? && apiMetaDataInfo.display?? && apiMetaDataInfo.display.description?? && apiMetaDataInfo.display.description.description??>
-        		<p>${apiMetaDataInfo.display.description.description}</p> 
-        </#if>      
+        		<p>${apiMetaDataInfo.display.description.description}</p>
+        </#if>
       <li class="resource">
        <#if apiMetaDataInfo?? && apiMetaDataInfo.apiMetaData??>
          <#list apiMetaDataInfo.apiMetaData?keys as groupKey>
-          	<div onClick="collaps_1()" class="group">
+          	<div onClick="collaps('${apiMetaDataInfo.apiMetaData[groupKey].id}')" class="group">
             <h2 >${apiMetaDataInfo.apiMetaData[groupKey].groupName}  : ${apiMetaDataInfo.apiMetaData[groupKey].groupTittle}</h2>
             <div class="expand_div">
-                 <div class="plus" id="plus">
+                 <div class="plus" id="${apiMetaDataInfo.apiMetaData[groupKey].id}plus">
                             +
                  </div>
-                 <div class="minus" id="minus">
+                 <div class="minus" id="${apiMetaDataInfo.apiMetaData[groupKey].id}minus">
                     -
                  </div>
              </div>
 				</div>
+<ul class="endpoints" id="${apiMetaDataInfo.apiMetaData[groupKey].id}">
 				<#if apiMetaDataInfo.apiMetaData[groupKey]?? && apiMetaDataInfo.apiMetaData[groupKey].apiMetaDataList??>
-            	<#list apiMetaDataInfo.apiMetaData[groupKey].apiMetaDataList as api>          	
-          	  		<ul class="endpoints" id="list_one">	            			      				    
-          
+            	<#list apiMetaDataInfo.apiMetaData[groupKey].apiMetaDataList as api>
+
+
           <li class="endpoint">
             <ul class="operations">
                <#if api.httpMethod == 'GET'>
@@ -1340,14 +1332,14 @@ function collaps_2(){
                </#if>
               <div class="heading">
                   <div class="inner">
-                    <h3> <span class="http_method"> <a href="javascript:showDiv('${api.id}')">${api.httpMethod}</a> </span> <span class="path"> <a href="">${api.path}</a> </span> </h3>                    
-                  
+                    <h3> <span class="http_method"> <a href="javascript:showDiv('${api.id}')">${api.httpMethod}</a> </span> <span class="path"> <a href="">${api.path}</a> </span> </h3>
+
                     <ul class="options">
                       <li> <#if api.name??><a class="toggleOperation" href="">${api.name}</a> </#if></li>
                     </ul>
                   </div>
                 </div>
-                <div id="102.31004362178872" class="content" style="display:none">
+                <div id="${api.id}" class="content" style="display:none">
                 <div class="inner">
                   <div class="sandbox">
                     <div> <span class="sabdbox_title">${api.detail}</span>
@@ -1355,6 +1347,7 @@ function collaps_2(){
                       <#if api.requestContain == true>
                       <h4>Request</h4>
                       <div style="margin:0;padding:0;display:inline"></div>
+                      <#if api.requestParamContain == true>
                       <table class="fullwidth">
                         <tbody>
                           <tr>
@@ -1363,48 +1356,49 @@ function collaps_2(){
                             <th>Type</th>
                             <th>Description</th>
                           </tr>
-                        
+
                         <#if api.pathVariableMetaDataList??>
                            <#list api.pathVariableMetaDataList as pathVariable>
-            
+
                              <tr>
                                 <td><#if pathVariable.mandatory><div class="mandatory_dot"></div><#else>&nbsp;</#if></td>
                                 <td><#if pathVariable.name??><b>(PP)</b>${pathVariable.name}<#else>&nbsp;</#if></td>
                                 <td><#if pathVariable.type??>${pathVariable.type}<#else>&nbsp;</#if></td>
                                 <td><#if pathVariable.description??>${pathVariable.description}<#else>&nbsp;</#if></td>
                              </tr>
-                             
+
                             </#list>
                          </#if>
-                         
+
                          <#if api.queryVariableMetaDataList??>
                            <#list api.queryVariableMetaDataList as queryVariable>
-            
+
                              <tr>
                                 <td><#if queryVariable.mandatory><div class="mandatory_dot"></div><#else>&nbsp;</#if></td>
                                 <td><#if queryVariable.name??><b>(PP)</b>${queryVariable.name}<#else>&nbsp;</#if></td>
                                 <td><#if queryVariable.type??> ${queryVariable.type}<#else>&nbsp;</#if></td>
                                 <td><#if queryVariable.description??> ${queryVariable.description}<#else>&nbsp;</#if></td>
                              </tr>
-                             
+
                             </#list>
                          </#if>
-                         
+
                          <#if api.headerVariableMetaDataList??>
                            <#list api.headerVariableMetaDataList as headerVariable>
-            
+
                              <tr>
                                 <td><#if headerVariable.mandatory><div class="mandatory_dot"></div><#else>&nbsp;</#if></td>
                                 <td><#if headerVariable.name??><b>(PP)</b>${headerVariable.name}<#else>&nbsp;</#if></td>
                                 <td><#if headerVariable.type??>${headerVariable.type}<#else>&nbsp;</#if></td>
-                                <td><#if headerVariable.description??>&nbsp;${headerVariable.description}<#else>&nbsp;</#if></td>
+                                <td><#if headerVariable.description??>${headerVariable.description}<#else>&nbsp;</#if></td>
                              </tr>
-                             
+
                             </#list>
                          </#if>
-                         
+
                         </tbody>
                       </table>
+                      </#if>
                       <#if api.requestBody??>
                       <div style="margin:0;padding:0">
                         <table>
@@ -1415,13 +1409,14 @@ function collaps_2(){
                             </tr>
                           </tbody>
                         </table>
+                        </div>
                         </#if>
                         </#if>
-                      
+
                       <#if api.responseContain == true>
                       <h4>Response</h4>
                       <div style="margin:0;padding:0;display:inline">
-                      <#if api.httpCodeMetaDataList??>
+                      <#if api.httpResponseCodeContain == true>
                         <table class="fullwidth">
                           <tbody>
                             <tr>
@@ -1450,20 +1445,20 @@ function collaps_2(){
                         </div>
                         </#if>
                       </div>
-                      </#if>                    
+                      </#if>
                     </div>
                   </div>
                 </div>
                 <div class="clear"></div>
                 </div>
-                </div>
               </li>
             </ul>
           </li>
-          </ul>
+
              </#list>
             </#if>
-         </#list>       
+          </ul>
+         </#list>
        </#if>
       </li>
       </li>

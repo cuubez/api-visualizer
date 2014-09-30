@@ -31,7 +31,9 @@ public class ApiMetaData {
     public List<HeaderVariableMetaData> headerVariableMetaDataList;
     public List<HttpCodeMetaData> httpCodeMetaDataList;
     public boolean requestContain = true;
+    public boolean requestParamContain = true;
     public boolean responseContain = true;
+    public boolean httpResponseCodeContain = true;
 
     public ApiMetaData(String id, String httpMethod, String path) {
         this.id = id;
@@ -150,5 +152,21 @@ public class ApiMetaData {
 
     public void setResponseContain(boolean responseContain) {
         this.responseContain = responseContain;
+    }
+
+    public boolean isRequestParamContain() {
+        return requestParamContain;
+    }
+
+    public void setRequestParamContain(boolean requestParamContain) {
+        this.requestParamContain = requestParamContain;
+    }
+
+    public boolean isHttpResponseCodeContain() {
+        return httpResponseCodeContain;
+    }
+
+    public void setHttpResponseCodeContain(boolean httpResponseCodeContain) {
+        this.httpResponseCodeContain = httpResponseCodeContain;
     }
 }

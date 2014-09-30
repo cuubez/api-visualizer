@@ -15,7 +15,6 @@
 package com.cuubez.visualizer.processor;
 
 
-import com.cuubez.visualizer.annotation.*;
 import com.cuubez.visualizer.domain.*;
 import com.cuubez.visualizer.domain.configuration.*;
 import com.cuubez.visualizer.domain.configuration.Group;
@@ -26,8 +25,6 @@ import com.cuubez.visualizer.resource.SubResource;
 import com.cuubez.visualizer.util.CuubezUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,16 +162,28 @@ public class ApiMetaDataProcessor {
         List<PathVariableMetaData> pathVariableMetaDataList = apiMetaData.getPathVariableMetaDataList();
         List<QueryVariableMetaData> queryVariableMetaDataList = apiMetaData.getQueryVariableMetaDataList();
         List<HeaderVariableMetaData> headerVariableMetaDataList = apiMetaData.getHeaderVariableMetaDataList();
+        List<HttpCodeMetaData> httpCodeMetaDataList = apiMetaData.getHttpCodeMetaDataList();
         String requestBody = apiMetaData.getRequestBody();
         String responseBody = apiMetaData.getResponseBody();
 
         if((pathVariableMetaDataList == null || pathVariableMetaDataList.isEmpty()) && (queryVariableMetaDataList == null || queryVariableMetaDataList.isEmpty())
-                && (headerVariableMetaDataList == null || headerVariableMetaDataList.isEmpty()) && CuubezUtil.isNullOrEmpty(requestBody)) {
-            apiMetaData.setRequestContain(false);
+                && (headerVariableMetaDataList == null || headerVariableMetaDataList.isEmpty())) {
+
+            apiMetaData.setRequestParamContain(false);
+
+            if(CuubezUtil.isNullOrEmpty(requestBody)) {
+                apiMetaData.setRequestContain(false);
+            }
         }
 
-        if(CuubezUtil.isNullOrEmpty(responseBody)) {
-            apiMetaData.setResponseContain(false);
+        if(httpCodeMetaDataList == null) {
+
+            apiMetaData.setHttpResponseCodeContain(false);
+
+            if (CuubezUtil.isNullOrEmpty(responseBody)) {
+                apiMetaData.setResponseContain(false);
+            }
+
         }
     }
 
@@ -253,6 +262,7 @@ public class ApiMetaDataProcessor {
 
         if(apiMetaDataMap.get(groupName) == null) {
             ApiGroupMetaData groupMetaData = new ApiGroupMetaData();
+            groupMetaData.setId(CuubezUtil.generateRandomString());
             groupMetaData.setGroupName(groupName);
             groupMetaData.setGroupTittle(groupTittle);
             groupMetaData.setApiMetaDataList(new ArrayList<ApiMetaData>());
