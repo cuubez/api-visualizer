@@ -543,7 +543,7 @@ body {
 	text-decoration: none;
 	color: white;
 	display: inline-block;
-	width: 50px;
+	width: 60px;
 	font-size: 0.7em;
 	text-align: center;
 	padding: 7px 0 4px;
@@ -1320,6 +1320,7 @@ function collaps(id){
 
 
           <li class="endpoint">
+
             <ul class="operations">
                <#if api.httpMethod == 'GET'>
                  <li class="get operation">
@@ -1327,6 +1328,12 @@ function collaps(id){
                  <li class="post operation">
                <#elseif api.httpMethod == 'PUT'>
                  <li class="put operation">
+               <#elseif api.httpMethod == 'OPTIONS'>
+                 <li class="options operation">
+               <#elseif api.httpMethod == 'PATCH'>
+                 <li class="patch operation">
+               <#elseif api.httpMethod == 'HEAD'>
+                 <li class="head operation">
                <#else>
                  <li class="delete operation">
                </#if>
@@ -1466,7 +1473,7 @@ function collaps(id){
   </div>
 </div>
 <div class="footer">
-  <div class="footer_inner"> &copy; 2014 CuuBEZ - Terms &amp; Privacy </div>
+  <div class="footer_inner"></div>
 </div>
 </body>
 </html>
