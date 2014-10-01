@@ -124,7 +124,8 @@ public class ResourceMetaDataScanner {
 
 
         if (method.getAnnotation(GET.class) != null ||
-                method.getAnnotation(POST.class) != null || method.getAnnotation(PUT.class) != null || method.getAnnotation(DELETE.class) != null) {
+                method.getAnnotation(POST.class) != null || method.getAnnotation(PUT.class) != null || method.getAnnotation(DELETE.class) != null || method.getAnnotation(HEAD.class) != null
+                || method.getAnnotation(OPTIONS.class) != null) {
 
             return true;
         }
@@ -259,6 +260,20 @@ public class ResourceMetaDataScanner {
 
         if (delete != null) {
             subResource.setHttpMethod(HttpMethod.DELETE);
+            return true;
+        }
+
+        HEAD head = method.getAnnotation(HEAD.class);
+
+        if (head != null) {
+            subResource.setHttpMethod(HttpMethod.HEAD);
+            return true;
+        }
+
+        OPTIONS options = method.getAnnotation(OPTIONS.class);
+
+        if (options != null) {
+            subResource.setHttpMethod(HttpMethod.OPTIONS);
             return true;
         }
 
