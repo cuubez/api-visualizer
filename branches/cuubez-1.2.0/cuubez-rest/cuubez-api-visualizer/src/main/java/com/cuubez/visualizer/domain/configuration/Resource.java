@@ -15,17 +15,23 @@
 package com.cuubez.visualizer.domain.configuration;
 
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import java.util.List;
 
 public class Resource {
 
     private String path;
     private String name;
+    @XStreamAlias("http-method")
     private String httpMethod;
     private String detail;
+    @XStreamAlias("http-codes")
     private List<HttpCode> httpCodes;
     private List<Variable> variables;
+    @XStreamAlias("request-body-type")
     private String requestBodyType;
+    @XStreamAlias("response-body-type")
     private String responseBodyType;
 
     public String getPath() {

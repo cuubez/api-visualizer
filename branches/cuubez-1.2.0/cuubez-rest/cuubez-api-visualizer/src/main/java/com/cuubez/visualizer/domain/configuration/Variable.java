@@ -15,10 +15,14 @@
 package com.cuubez.visualizer.domain.configuration;
 
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 public class Variable {
 
     private String name;
+    @XStreamAlias("variable-type")
     private String variableType;
+    @XStreamAlias("parameter-type")
     private String parameterType;
     private String description;
     private boolean mandatory;

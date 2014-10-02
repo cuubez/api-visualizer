@@ -93,9 +93,10 @@ public class ConfigurationProcessor {
 
     private  <T> T unMarshal(String rootNode, String content, Class<T> targetClass) {
         XStream xStream = new XStream(new DomDriver());
+        xStream.processAnnotations(Configuration.class);
         xStream.alias(rootNode, targetClass);
         xStream.alias("group", Group.class);
-        xStream.alias("httpCode", HttpCode.class);
+        xStream.alias("http-code", HttpCode.class);
         xStream.alias("resource", Resource.class);
         xStream.alias("variable", Variable.class);
         return targetClass.cast(xStream.fromXML(content));
