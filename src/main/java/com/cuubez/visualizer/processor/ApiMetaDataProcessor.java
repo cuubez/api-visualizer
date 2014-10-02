@@ -112,40 +112,46 @@ public class ApiMetaDataProcessor {
 
                         for (Resource resource : resources)  {
 
-                            ApiMetaData apiMetaData = new ApiMetaData(CuubezUtil.generateRandomString(), resource.getHttpMethod(), resource.getPath());
+                            if(!CuubezUtil.isNullOrEmpty(resource.getHttpMethod()) && !CuubezUtil.isNullOrEmpty(resource.getPath())) {
 
-                            apiMetaData.setName(resource.getName());
-                            apiMetaData.setDetail(resource.getDetail());
-                            apiMetaData.setPathVariableMetaDataList(getPathVariableMetaDataList(resource.getVariables()));
-                            apiMetaData.setQueryVariableMetaDataList(getQueryVariableMetaDataList(resource.getVariables()));
-                            apiMetaData.setHeaderVariableMetaDataList(getHeaderVariableMetaDataList(resource.getVariables()));
-                            if(resource.getRequestBodyType() != null) {
-                                try {
-                                    Class requestType = Class.forName(resource.getRequestBodyType());
-                                    apiMetaData.setRequestBody(CuubezUtil.generateJsonSchema(requestType));
-                                } catch (ClassNotFoundException e) {
-                                    log.error("Request body type class ["+resource.getRequestBodyType()+"] not found", e);
+                                ApiMetaData apiMetaData = new ApiMetaData(CuubezUtil.generateRandomString(), resource.getHttpMethod(), resource.getPath());
+
+                                apiMetaData.setName(resource.getName() == null?"":resource.getName());
+                                apiMetaData.setDetail(resource.getDetail() == null?"":resource.getDetail());
+                                apiMetaData.setPathVariableMetaDataList(getPathVariableMetaDataList(resource.getVariables()));
+                                apiMetaData.setQueryVariableMetaDataList(getQueryVariableMetaDataList(resource.getVariables()));
+                                apiMetaData.setHeaderVariableMetaDataList(getHeaderVariableMetaDataList(resource.getVariables()));
+                                if (resource.getRequestBodyType() != null) {
+                                    try {
+                                        Class requestType = Class.forName(resource.getRequestBodyType());
+                                        apiMetaData.setRequestBody(CuubezUtil.generateJsonSchema(requestType));
+                                    } catch (ClassNotFoundException e) {
+                                        log.error("Request body type class [" + resource.getRequestBodyType() + "] not found", e);
+                                    }
+
                                 }
 
-                            }
-
-                            if(resource.getResponseBodyType() != null) {
-                                try {
-                                    Class responseType = Class.forName(resource.getResponseBodyType());
-                                    apiMetaData.setResponseBody(CuubezUtil.generateJsonSchema(responseType));
-                                } catch (ClassNotFoundException e) {
-                                    log.error("Response body type class ["+resource.getRequestBodyType()+"] not found", e);
+                                if (resource.getResponseBodyType() != null) {
+                                    try {
+                                        Class responseType = Class.forName(resource.getResponseBodyType());
+                                        apiMetaData.setResponseBody(CuubezUtil.generateJsonSchema(responseType));
+                                    } catch (ClassNotFoundException e) {
+                                        log.error("Response body type class [" + resource.getRequestBodyType() + "] not found", e);
+                                    }
                                 }
+
+
+                                apiMetaData.setHttpCodeMetaDataList(CuubezUtil.getHttpCodes(getHttpCodeMetaDataList(group.getHttpCodes()), getHttpCodeMetaDataList(resource.getHttpCodes())));
+                                finalizeApiMetaData(apiMetaData);
+                                if(!CuubezUtil.isNullOrEmpty(group.getName())) {
+                                    addSubResource(group.getName(), group.getTitle(), apiMetaData);
+                                }
+                                ApiMetaDataInformation apiMetaDataInformation = new ApiMetaDataInformation();
+                                apiMetaDataInformation.setApiMetaData(apiMetaDataMap);
+                                populateDisplayConfiguration(apiMetaDataInformation);
+                                InformationRepository.getInstance().setApiMetaData(apiMetaDataInformation);
+
                             }
-
-
-                            apiMetaData.setHttpCodeMetaDataList(CuubezUtil.getHttpCodes(getHttpCodeMetaDataList(group.getHttpCodes()), getHttpCodeMetaDataList(resource.getHttpCodes())));
-                            finalizeApiMetaData(apiMetaData);
-                            addSubResource(group.getName(), group.getTitle(), apiMetaData);
-                            ApiMetaDataInformation apiMetaDataInformation = new ApiMetaDataInformation();
-                            apiMetaDataInformation.setApiMetaData(apiMetaDataMap);
-                            populateDisplayConfiguration(apiMetaDataInformation);
-                            InformationRepository.getInstance().setApiMetaData(apiMetaDataInformation);
 
                         }
                     }
@@ -196,8 +202,8 @@ public class ApiMetaDataProcessor {
         List<PathVariableMetaData> pathVariableMetaDataList = new ArrayList<PathVariableMetaData>();
 
         for (Variable variable : variables) {
-            if("path".equalsIgnoreCase(variable.getParameterType())) {
-                PathVariableMetaData pathVariableMetaData = new PathVariableMetaData(variable.getName(), variable.isMandatory(), variable.getVariableType(),variable.getDescription());
+            if(!CuubezUtil.isNullOrEmpty(variable.getParameterType()) && "path".equalsIgnoreCase(variable.getParameterType()) && !CuubezUtil.isNullOrEmpty(variable.getName())) {
+                PathVariableMetaData pathVariableMetaData = new PathVariableMetaData(variable.getName(), variable.isMandatory(), variable.getVariableType(), variable.getDescription() == null?"":variable.getDescription());
                 pathVariableMetaDataList.add(pathVariableMetaData);
             }
         }
@@ -214,8 +220,8 @@ public class ApiMetaDataProcessor {
         List<QueryVariableMetaData> queryVariableMetaDataList = new ArrayList<QueryVariableMetaData>();
 
         for (Variable variable : variables) {
-            if("query".equalsIgnoreCase(variable.getParameterType())) {
-                QueryVariableMetaData queryVariableMetaData = new QueryVariableMetaData(variable.getName(), variable.isMandatory(), variable.getVariableType(),variable.getDescription());
+            if(!CuubezUtil.isNullOrEmpty(variable.getParameterType()) && "query".equalsIgnoreCase(variable.getParameterType()) && !CuubezUtil.isNullOrEmpty(variable.getName())) {
+                QueryVariableMetaData queryVariableMetaData = new QueryVariableMetaData(variable.getName(), variable.isMandatory(), variable.getVariableType(), variable.getDescription() == null?"":variable.getDescription());
                 queryVariableMetaDataList.add(queryVariableMetaData);
             }
         }
@@ -232,8 +238,8 @@ public class ApiMetaDataProcessor {
         List<HeaderVariableMetaData> headerVariableMetaDataList = new ArrayList<HeaderVariableMetaData>();
 
         for (Variable variable : variables) {
-            if("header".equalsIgnoreCase(variable.getParameterType())) {
-                HeaderVariableMetaData headerVariableMetaData = new HeaderVariableMetaData(variable.getName(), variable.isMandatory(), variable.getVariableType(),variable.getDescription());
+            if(!CuubezUtil.isNullOrEmpty(variable.getParameterType()) && "header".equalsIgnoreCase(variable.getParameterType()) && !CuubezUtil.isNullOrEmpty(variable.getName())) {
+                HeaderVariableMetaData headerVariableMetaData = new HeaderVariableMetaData(variable.getName(), variable.isMandatory(), variable.getVariableType(),variable.getDescription() == null?"":variable.getDescription());
                 headerVariableMetaDataList.add(headerVariableMetaData);
             }
         }
@@ -251,8 +257,10 @@ public class ApiMetaDataProcessor {
 
         for (HttpCode httpCode : httpCodes) {
 
-            HttpCodeMetaData httpCodeMetaData = new HttpCodeMetaData(String.valueOf(httpCode.getCode()), httpCode.getReason());
-            httpCodeMetaDataList.add(httpCodeMetaData);
+            if (httpCode.getCode() != null) {
+                HttpCodeMetaData httpCodeMetaData = new HttpCodeMetaData(String.valueOf(httpCode.getCode()), httpCode.getReason() == null ? "" : httpCode.getReason());
+                httpCodeMetaDataList.add(httpCodeMetaData);
+            }
         }
 
       return httpCodeMetaDataList;
@@ -264,12 +272,13 @@ public class ApiMetaDataProcessor {
             ApiGroupMetaData groupMetaData = new ApiGroupMetaData();
             groupMetaData.setId(CuubezUtil.generateRandomString());
             groupMetaData.setGroupName(groupName);
-            groupMetaData.setGroupTittle(groupTittle);
+            groupMetaData.setGroupTittle(groupTittle == null?"":groupTittle);
             groupMetaData.setApiMetaDataList(new ArrayList<ApiMetaData>());
             apiMetaDataMap.put(groupName, groupMetaData);
-        }
+        } else {
 
-        apiMetaDataMap.get(groupName).addApiMetaData(apiMetaData);
+            apiMetaDataMap.get(groupName).addApiMetaData(apiMetaData);
+        }
 
     }
 

@@ -15,11 +15,15 @@
 package com.cuubez.visualizer.domain.configuration;
 
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 public class Display {
 
     String header;
     String tittle;
+    @XStreamAlias("logo-url")
     String logoUrl;
+    @XStreamAlias("logo-include")
     boolean logoInclude;
     Description description;
 

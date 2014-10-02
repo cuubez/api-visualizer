@@ -15,6 +15,8 @@
 package com.cuubez.visualizer.domain.configuration;
 
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import java.util.List;
 
 public class Group {
@@ -22,6 +24,7 @@ public class Group {
     private String name;
     private String title;
     private List<Resource> resources;
+    @XStreamAlias("http-codes")
     private List<HttpCode> httpCodes;
 
     public Group(String name, String title) {
