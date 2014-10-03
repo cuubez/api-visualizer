@@ -275,10 +275,10 @@ public class ApiMetaDataProcessor {
             groupMetaData.setGroupTittle(groupTittle == null?"":groupTittle);
             groupMetaData.setApiMetaDataList(new ArrayList<ApiMetaData>());
             apiMetaDataMap.put(groupName, groupMetaData);
-        } else {
-
-            apiMetaDataMap.get(groupName).addApiMetaData(apiMetaData);
         }
+
+        apiMetaDataMap.get(groupName).addApiMetaData(apiMetaData);
+
 
     }
 
