@@ -632,7 +632,7 @@ body {
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.put div.heading h3 span.http_method a {
 	/*background-color: #c5862b;*/
-
+    text-transform: uppercase;
 	background: rgba(255,175,75,1);
 	background: -moz-linear-gradient(top, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
 	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,175,75,1)), color-stop(100%, rgba(255,146,10,1)));
@@ -668,7 +668,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', end
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.head div.heading h3 span.http_method a {
 	text-transform: uppercase;
-	background-color: #ffd20f;
+	background: rgba(254,182,69,1);
+    background: -moz-linear-gradient(top, rgba(254,182,69,1) 0%, rgba(255,210,15,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(254,182,69,1)), color-stop(100%, rgba(255,210,15,1)));
+    background: -webkit-linear-gradient(top, rgba(254,182,69,1) 0%, rgba(255,210,15,1) 100%);
+    background: -o-linear-gradient(top, rgba(254,182,69,1) 0%, rgba(255,210,15,1) 100%);
+    background: -ms-linear-gradient(top, rgba(254,182,69,1) 0%, rgba(255,210,15,1) 100%);
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.head div.heading ul.options li {
 	border-right: 1px solid #dddddd;
@@ -729,6 +734,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', end
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.post div.heading h3 span.http_method a {
 	/*background-color: #10a54a;*/
+	text-transform: uppercase;
 	background: rgba(34,235,112,1);
 	background: -moz-linear-gradient(top, rgba(34,235,112,1) 0%, rgba(16,165,74,1) 100%);
 	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(34,235,112,1)), color-stop(100%, rgba(16,165,74,1)));
@@ -787,7 +793,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', end
 	border-radius:2px;
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.get div.heading h3 span.http_method a {
-
+text-transform: uppercase;
 background: rgba(120,179,235,1);
 background: -moz-linear-gradient(top, rgba(120,179,235,1) 0%, rgba(32,124,229,1) 100%);
 background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(120,179,235,1)), color-stop(100%, rgba(32,124,229,1)));
@@ -821,7 +827,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#78b3eb', end
 	border: 1px solid #c3d9ec;
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.options div.heading h3 span.http_method a {
-	background-color: #0f6ab4;
+	text-transform: uppercase;
+	background: rgba(73,155,234,1);
+    background: -moz-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(15,106,180,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(73,155,234,1)), color-stop(100%, rgba(15,106,180,1)));
+    background: -webkit-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(15,106,180,1) 100%);
+    background: -o-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(15,106,180,1) 100%);
+    background: -ms-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(15,106,180,1) 100%);
+    background: linear-gradient(to bottom, rgba(73,155,234,1) 0%, rgba(15,106,180,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#0f6ab4', GradientType=0 );
 }
 .cuubez-section .cuubez-ui-wrap ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.options div.heading ul.options li {
 	border-right: 1px solid #dddddd;
