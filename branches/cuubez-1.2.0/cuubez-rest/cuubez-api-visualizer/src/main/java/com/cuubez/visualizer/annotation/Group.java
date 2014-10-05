@@ -22,6 +22,6 @@ import java.lang.annotation.*;
 public @interface Group {
 
     String name();
-    String tittle();
+    String title();
 
 }

@@ -33,8 +33,8 @@ import java.util.Map;
 public class ApiMetaDataProcessor {
 
     private static Log log = LogFactory.getLog(ApiMetaDataProcessor.class);
-    private static final String DEFAULT_HEADER = "API Documentation";
-    private static final String DEFAULT_TITTLE = "API Documentation";
+    private static final String DEFAULT_HEADER = "Cuubez API Documentation";
+    private static final String DEFAULT_TITTLE = "Cuubez API Documentation";
 
     Map<String, ApiGroupMetaData> apiMetaDataMap = new HashMap<String, ApiGroupMetaData>();
 
@@ -292,8 +292,8 @@ public class ApiMetaDataProcessor {
             if(CuubezUtil.isNullOrEmpty(display.getHeader())) {
                 display.setHeader(DEFAULT_HEADER);
             }
-            if(CuubezUtil.isNullOrEmpty(display.getTittle())) {
-                display.setHeader(DEFAULT_TITTLE);
+            if(CuubezUtil.isNullOrEmpty(display.getTitle())) {
+                display.setTittle(DEFAULT_TITTLE);
             }
 
         } else {
