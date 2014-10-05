@@ -20,7 +20,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class Display {
 
     String header;
-    String tittle;
+    String title;
     @XStreamAlias("logo-url")
     String logoUrl;
     @XStreamAlias("logo-include")
@@ -35,12 +35,12 @@ public class Display {
         this.header = header;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
     public void setTittle(String tittle) {
-        this.tittle = tittle;
+        this.title = tittle;
     }
 
     public String getLogoUrl() {

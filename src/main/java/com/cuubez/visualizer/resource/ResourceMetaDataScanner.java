@@ -339,7 +339,7 @@ public class ResourceMetaDataScanner {
         if (group != null) {
 
             rootResource.setGroupName(group.name());
-            rootResource.setGroupTittle(group.tittle());
+            rootResource.setGroupTittle(group.title());
 
             return true;
         }

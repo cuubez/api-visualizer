@@ -1267,9 +1267,7 @@ function collaps(id){
 
 </script>
 <#if apiMetaDataInfo?? && apiMetaDataInfo.display?? && apiMetaDataInfo.display.header??>
-	<title>${apiMetaDataInfo.display.header}</title>
-<#else>
-	<title>Cuubez API Document</title>
+	<title>${apiMetaDataInfo.display.title}</title>
 </#if>
 
 </head>
@@ -1291,10 +1289,8 @@ function collaps(id){
           </td>
           <td class="secondt_td">
           	<span class="header_tittle">
-          	  <#if apiMetaDataInfo?? && apiMetaDataInfo.display?? && apiMetaDataInfo.display.tittle??>
-          	  		${apiMetaDataInfo.display.tittle}
-          	  <#else>
-          	  		API Documentation
+          	  <#if apiMetaDataInfo?? && apiMetaDataInfo.display?? && apiMetaDataInfo.display.header??>
+          	  		${apiMetaDataInfo.display.header}
           	  </#if>
           	</span>
           </td>
@@ -1311,8 +1307,8 @@ function collaps(id){
         <#if apiMetaDataInfo?? && apiMetaDataInfo.display?? && apiMetaDataInfo.display.description?? && apiMetaDataInfo.display.description.header??>
         		<h6>${apiMetaDataInfo.display.description.header}</h6>
         </#if>
-        <#if apiMetaDataInfo?? && apiMetaDataInfo.display?? && apiMetaDataInfo.display.description?? && apiMetaDataInfo.display.description.description??>
-        		<p>${apiMetaDataInfo.display.description.description}</p>
+        <#if apiMetaDataInfo?? && apiMetaDataInfo.display?? && apiMetaDataInfo.display.description?? && apiMetaDataInfo.display.description.detail??>
+        		<p>${apiMetaDataInfo.display.description.detail}</p>
         </#if>
       <li class="resource">
        <#if apiMetaDataInfo?? && apiMetaDataInfo.apiMetaData??>

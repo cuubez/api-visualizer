@@ -18,7 +18,7 @@ package com.cuubez.visualizer.domain.configuration;
 public class Description {
 
     private String header;
-    private String description;
+    private String detail;
 
     public String getHeader() {
         return header;
@@ -28,11 +28,11 @@ public class Description {
         this.header = header;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }
