@@ -1392,7 +1392,7 @@ function collaps(id){
 
                              <tr>
                                 <td><#if queryVariable.mandatory><div class="mandatory_dot"></div><#else>&nbsp;</#if></td>
-                                <td><#if queryVariable.name??><b>(PP)</b>${queryVariable.name}<#else>&nbsp;</#if></td>
+                                <td><#if queryVariable.name??><b>(QP)</b>${queryVariable.name}<#else>&nbsp;</#if></td>
                                 <td><#if queryVariable.type??> ${queryVariable.type}<#else>&nbsp;</#if></td>
                                 <td><#if queryVariable.description??> ${queryVariable.description}<#else>&nbsp;</#if></td>
                              </tr>
@@ -1405,7 +1405,7 @@ function collaps(id){
 
                              <tr>
                                 <td><#if headerVariable.mandatory><div class="mandatory_dot"></div><#else>&nbsp;</#if></td>
-                                <td><#if headerVariable.name??><b>(PP)</b>${headerVariable.name}<#else>&nbsp;</#if></td>
+                                <td><#if headerVariable.name??><b>(HP)</b>${headerVariable.name}<#else>&nbsp;</#if></td>
                                 <td><#if headerVariable.type??>${headerVariable.type}<#else>&nbsp;</#if></td>
                                 <td><#if headerVariable.description??>${headerVariable.description}<#else>&nbsp;</#if></td>
                              </tr>
