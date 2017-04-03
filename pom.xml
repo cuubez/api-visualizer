@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.cuubez</groupId>
   <artifactId>cuubez-api-visualizer</artifactId>
-  <version>1.2.0-mycom</version>
+  <version>1.2.1-mycom</version>
   <packaging>jar</packaging>
   <name>Cuubez API Visualization Framework</name>
   <description>

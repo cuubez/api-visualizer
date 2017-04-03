@@ -14,51 +14,57 @@
  */
 package com.cuubez.visualizer.servlet;
 
-import com.cuubez.visualizer.domain.ApiMetaDataInformation;
-import com.cuubez.visualizer.resource.InformationRepository;
-import freemarker.template.Configuration;
-import freemarker.template.TemplateException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import freemarker.template.Template;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MediaType;
 
-public class ServletContainer extends HttpServlet {
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-    private static Log log = LogFactory.getLog(ServletContainer.class);
+import com.cuubez.visualizer.domain.ApiMetaDataInformation;
+import com.cuubez.visualizer.resource.InformationRepository;
 
-    protected void process(HttpServletRequest request, HttpServletResponse response) {
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
-        ApiMetaDataInformation apiMetaDataInformation = InformationRepository.getInstance().getApiMetaData();
+public class ServletContainer extends HttpServlet
+{
 
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put("apiMetaDataInfo", apiMetaDataInformation);
+   private static Log log = LogFactory.getLog(ServletContainer.class);
 
+   protected void process(HttpServletRequest request, HttpServletResponse response)
+   {
+      response.setContentType(MediaType.TEXT_HTML);
 
-        try {
+      ApiMetaDataInformation apiMetaDataInformation = InformationRepository.getInstance().getApiMetaData();
 
-            Configuration freemarkerConfiguration = new Configuration();
-            freemarkerConfiguration.setClassForTemplateLoading(this.getClass(), "/");
-            Template freemarkerTemplate = freemarkerConfiguration.getTemplate("cuubez_api.ftl");
-            freemarkerTemplate.process(data, response.getWriter());
+      Map<String, Object> data = new HashMap<String, Object>();
+      data.put("apiMetaDataInfo", apiMetaDataInformation);
 
+      try
+      {
 
-        } catch (IOException e) {
-            log.error(e);
-        } catch (TemplateException e) {
-            log.error(e);
-        }
+         Configuration freemarkerConfiguration = new Configuration();
+         freemarkerConfiguration.setClassForTemplateLoading(this.getClass(), "/");
+         Template freemarkerTemplate = freemarkerConfiguration.getTemplate("cuubez_api.ftl");
+         freemarkerTemplate.process(data, response.getWriter());
 
+      }
+      catch (IOException e)
+      {
+         log.error(e);
+      }
+      catch (TemplateException e)
+      {
+         log.error(e);
+      }
 
-    }
-
-
+   }
 
 }
