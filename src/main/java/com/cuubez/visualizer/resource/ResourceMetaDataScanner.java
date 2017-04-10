@@ -14,18 +14,29 @@
  */
 package com.cuubez.visualizer.resource;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.HEAD;
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.OPTIONS;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.ext.Provider;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.cuubez.visualizer.annotation.Detail;
 import com.cuubez.visualizer.annotation.Group;
 import com.cuubez.visualizer.annotation.Name;
 import com.cuubez.visualizer.annotation.ResponseType;
 import com.cuubez.visualizer.util.CuubezUtil;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import javax.ws.rs.*;
-import javax.ws.rs.ext.Provider;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 public class ResourceMetaDataScanner {
 
@@ -65,16 +76,14 @@ public class ResourceMetaDataScanner {
 
         int modifier = method.getModifiers();
 
-        if (Modifier.isStatic(modifier) || !Modifier.isPublic(modifier)) {
-            return null;
-        }
+        if (Modifier.isStatic(modifier) || !Modifier.isPublic(modifier))
+         return null;
 
         SubResource subResource = new SubResource();
         subResource.setReflectionMethod(method);
 
-        if (!scanHttpMethod(subResource, method)) {
-            return null;
-        }
+        if (!scanHttpMethod(subResource, method))
+         return null;
 
         scanPath(subResource, method);
         scanConsume(subResource, method);
@@ -91,29 +100,25 @@ public class ResourceMetaDataScanner {
 
     public static boolean isResource(Class<?> clazz) {
 
-        if (Modifier.isInterface(clazz.getModifiers()) || Modifier.isAbstract(clazz.getModifiers())) {
-            return false;
-        }
+        if ((clazz.getAnnotation(Path.class) != null) && (clazz.getAnnotation(Group.class) != null))
+         return true;
 
-        if (clazz.getAnnotation(Path.class) != null && clazz.getAnnotation(Group.class) != null) {
-            return true;
-        }
+        if (Modifier.isInterface(clazz.getModifiers()) || Modifier.isAbstract(clazz.getModifiers()))
+         return false;
 
         Class<?> declaringClass = clazz;
 
         while (!declaringClass.equals(Object.class)) {
             // try a superclass
             Class<?> superclass = declaringClass.getSuperclass();
-            if (superclass.getAnnotation(Path.class) != null && clazz.getAnnotation(Group.class) != null) {
-                return true;
-            }
+            if ((superclass.getAnnotation(Path.class) != null) && (clazz.getAnnotation(Group.class) != null))
+               return true;
 
             // try interfaces
             Class<?>[] interfaces = declaringClass.getInterfaces();
             for (Class<?> interfaceClass : interfaces) {
-                if (interfaceClass.getAnnotation(Path.class) != null && clazz.getAnnotation(Group.class) != null) {
-                    return true;
-                }
+                if ((interfaceClass.getAnnotation(Path.class) != null) && (clazz.getAnnotation(Group.class) != null))
+                  return true;
             }
             declaringClass = declaringClass.getSuperclass();
         }
@@ -123,12 +128,10 @@ public class ResourceMetaDataScanner {
     public static boolean isSubResource(Method method) {
 
 
-        if (method.getAnnotation(GET.class) != null ||
-                method.getAnnotation(POST.class) != null || method.getAnnotation(PUT.class) != null || method.getAnnotation(DELETE.class) != null || method.getAnnotation(HEAD.class) != null
-                || method.getAnnotation(OPTIONS.class) != null) {
-
-            return true;
-        }
+        if ((method.getAnnotation(GET.class) != null) ||
+                (method.getAnnotation(POST.class) != null) || (method.getAnnotation(PUT.class) != null) || (method.getAnnotation(DELETE.class) != null) || (method.getAnnotation(HEAD.class) != null)
+                || (method.getAnnotation(OPTIONS.class) != null))
+         return true;
 
         return false;
 
@@ -136,9 +139,8 @@ public class ResourceMetaDataScanner {
 
     public static boolean isProvider(Class<?> clazz) {
 
-        if (clazz.getAnnotation(Provider.class) != null) {
-            return true;
-        }
+        if (clazz.getAnnotation(Provider.class) != null)
+         return true;
 
         return false;
     }
